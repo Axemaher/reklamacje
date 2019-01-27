@@ -3,82 +3,142 @@ import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 import ReclamationsList from './ReclamationsList';
 import AddReclamation from './AddReclamation';
 import EditReclamation from './EditReclamation';
+import DetailsReclamation from '../components/DetailsReclamation';
+import { fbase, firebaseApp } from '../fbase';
 
 
 class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            content: [
-                { name: "Adam", sex: "male", id: "123" },
-                { name: "Stanisław", sex: "male", id: "243" },
-                { name: "Krzysiek", sex: "male", id: "322" },
-            ]
+            content: [],
+            loggedIn: false,
+            email: "",
+            password: "",
         }
     }
     add = (newData) => {
-        console.log(newData)
-        const stateCopy = [...this.state.content];
-        stateCopy.push(newData)
-        this.setState({
-            content: stateCopy
-        })
+        if (Array.isArray(this.state.content)) {
+            this.setState({ content: [...this.state.content, newData] })
+        } else {
+            this.setState({ content: [newData] })
+        }
+
     }
     edit = (data) => {
         const index = this.state.content.findIndex(el => el.id === data.id)
-        console.log(index)
         const stateCopy = this.state;
         stateCopy.content[index] = data;
         this.setState({
             content: stateCopy.content
         })
-        console.log(this.state)
+
+    }
+
+    componentDidMount() {
+        if (localStorage.getItem("loggedIn")) {
+            this.setState({
+                loggedIn: localStorage.getItem("loggedIn")
+            })
+        }
+        this.ref = fbase.syncState('content', {
+            context: this,
+            state: 'content'
+        })
+    }
+
+    componentWillUnmount() {
+        fbase.removeBinding(this.ref)
+    }
+    handleLoginChange = (e) => {
+        this.setState({
+            [e.target.name]: e.target.value
+        })
+    }
+    authenticate = (e) => {
+        e.preventDefault();
+        firebaseApp.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
+            .then(() => {
+                this.setState({
+                    loggedIn: true
+                });
+                localStorage.setItem("loggedIn", true);
+            })
+            .catch(() => {
+                console.log("Wrong data to login")
+            })
     }
     render() {
-        console.log(this.state)
+        console.log(this.state.content)
         return (
             <div>
+                {!this.state.loggedIn &&
+                    <form onSubmit={this.authenticate}>
+                        <input
+                            placeholder="email"
+                            type="email"
+                            name="email"
+                            onChange={this.handleLoginChange}
+                            value={this.state.email} />
+                        <input
+                            type="password"
+                            name="password"
+                            onChange={this.handleLoginChange}
+                            value={this.state.password} />
+                        <button type="submit">Login</button>
+                    </form>
+                }
+                {this.state.loggedIn &&
+                    <div>
+                        <Router>
+                            <>
+                                <ul>
+                                    <li>
+                                        <Link to="/">Lista reklamacji</Link>
+                                    </li>
+                                    <li>
+                                        <Link to="/add">Dodaj</Link>
+                                    </li>
+                                </ul>
+                                <Switch>
+                                    <Route
+                                        exact path="/"
+                                        render={(props) =>
+                                            <ReclamationsList
+                                                {...props}
+                                                content={this.state.content}
+                                            />}
+                                    />
+                                    <Route
+                                        path="/add"
+                                        render={(props) =>
+                                            <AddReclamation
+                                                {...props}
+                                                handleAdd={this.add}
+                                            />}
+                                    />
+                                    <Route
+                                        path="/edit/:id"
+                                        render={(props) =>
+                                            <EditReclamation
+                                                {...props}
+                                                handleEdit={this.edit}
+                                                content={this.state.content}
+                                            />}
+                                    />
+                                    <Route
+                                        path="/details/:id"
+                                        render={(props) =>
+                                            <DetailsReclamation
+                                                {...props}
+                                                content={this.state.content}
+                                            />}
+                                    />
 
-                <Router>
-                    <>
-                        <ul>
-                            <li>
-                                <Link to="/">Lista reklamacji</Link>
-                            </li>
-                            <li>
-                                <Link to="/add">Dodaj</Link>
-                            </li>
-                        </ul>
-                        <Switch>
-                            <Route
-                                exact path="/"
-                                render={(props) =>
-                                    <ReclamationsList
-                                        {...props}
-                                        content={this.state.content}
-                                    />}
-                            />
-                            <Route
-                                path="/add"
-                                render={(props) =>
-                                    <AddReclamation
-                                        {...props}
-                                        handleAdd={this.add}
-                                    />}
-                            />
-                            <Route
-                                path="/edit/:id"
-                                render={(props) =>
-                                    <EditReclamation
-                                        {...props}
-                                        handleEdit={this.edit}
-                                        content={this.state.content}
-                                    />}
-                            />
-
-                        </Switch>
-                    </>
-                </Router>
+                                </Switch>
+                            </>
+                        </Router>
+                    </div>}
 
             </div>
         );
