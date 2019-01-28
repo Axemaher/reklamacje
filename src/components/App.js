@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 import ReclamationsList from './ReclamationsList';
 import AddReclamation from './AddReclamation';
 import EditReclamation from './EditReclamation';
-import DetailsReclamation from '../components/DetailsReclamation';
+import DetailsReclamation from './DetailsReclamation';
 import { fbase, firebaseApp } from '../fbase';
 
 
@@ -115,6 +115,7 @@ class App extends Component {
                                             <AddReclamation
                                                 {...props}
                                                 handleAdd={this.add}
+                                                reclamationCounter={this.state.content.length}
                                             />}
                                     />
                                     <Route

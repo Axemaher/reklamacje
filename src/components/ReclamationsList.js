@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { fbase, firebaseApp } from '../fbase';
 class ReclamationsList extends Component {
     constructor(props) {
         super(props);
         this.state = {}
     }
     render() {
-        console.log(this.state.content)
         return (
             <>
                 <ul>
