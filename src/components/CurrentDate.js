@@ -8,6 +8,6 @@ export function CurrentDate(dataFormat) {
     if (dataFormat === "full date") {
         return `${day}.${month}.${year}`;
     } else if (dataFormat === "year") {
-        return `${day}`
+        return `${year}`
     }
 }

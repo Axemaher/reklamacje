@@ -69,7 +69,6 @@ class App extends Component {
             })
     }
     render() {
-        console.log(this.state.content)
         return (
             <div>
                 {!this.state.loggedIn &&

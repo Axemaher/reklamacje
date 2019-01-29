@@ -36,7 +36,12 @@ class AddReclamation extends React.Component {
     handleSubmit = (e) => {
         e.preventDefault();
         let stateCopy = this.state;
-        const reclamationNumber = this.props.reclamationCounter + 1;
+        let reclamationNumber = null
+        if (isNaN(this.props.reclamationCounter)) {
+            reclamationNumber = 1;
+        } else {
+            reclamationNumber = this.props.reclamationCounter + 1;
+        }
         stateCopy.reclamation.number = `RK ${reclamationNumber}/${CurrentDate("year")}`;
         stateCopy.reclamation.addDate = CurrentDate("full date");
         stateCopy.history.push(
