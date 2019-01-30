@@ -1,30 +1,57 @@
 import React from 'react';
-import ActionHistoryForm from './ActionHistoryForm';
-import InformationsForm from './InformationsForm';
-import ClientForm from './ClientForm';
-import ReclamationForm from './ReclamationForm';
+import uuid from 'uuid';
+import { CurrentDate } from '../addEdit/CurrentDate'
+import InformationsForm from '../addEdit/forms/InformationsForm';
+import ClientForm from '../addEdit/forms/ClientForm';
+import ReclamationForm from '../addEdit/forms/ReclamationForm';
 
-class EditReclamation extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {}
+
+class AddReclamation extends React.Component {
+    state = {
+        reclamation: {
+            number: "",
+            addDate: "",
+            warranty: true,
+            manufacturer: "",
+            model: "",
+            problemDesc: "",
+            ended: false,
+            sellNumber: ""
+        },
+        client: {
+            company: false,
+            nip: "",
+            name: "",
+            nick: "",
+            tel: "",
+            mail: ""
+        },
+        informations: {
+            note: "",
+            other: ""
+        },
+        history: [],
+        id: ""
     }
 
-    componentWillMount() {
-        const id = this.props.match.params.id;
-        const edited = this.props.content.filter(el => el.id === id)[0]
-        this.setState({
-            reclamation: edited.reclamation,
-            client: edited.client,
-            id: edited.id,
-            informations: edited.informations,
-            history: edited.history,
-        })
-    }
     handleSubmit = (e) => {
         e.preventDefault();
-        let newData = this.state;
-        this.props.handleEdit(newData)
+        let stateCopy = this.state;
+        let reclamationNumber = null
+        if (isNaN(this.props.reclamationCounter)) {
+            reclamationNumber = 1;
+        } else {
+            reclamationNumber = this.props.reclamationCounter + 1;
+        }
+        stateCopy.reclamation.number = `RK ${reclamationNumber}/${CurrentDate("year")}`;
+        stateCopy.reclamation.addDate = CurrentDate("full date");
+        stateCopy.history.push(
+            {
+                desc: "Wprowadzono do systemu",
+                date: CurrentDate("full date")
+            });
+        stateCopy.id = uuid.v4();
+        this.props.handleAdd(stateCopy)
     }
     handleChangeReclamation = (e) => {
         if (e.target.name === "warranty") {
@@ -65,21 +92,14 @@ class EditReclamation extends React.Component {
             }
         })
     }
-    handleAddAction = (newAction) => {
-        this.setState({
-            history: [...this.state.history, newAction]
-        })
-    }
     render() {
-        console.log(this.state.history)
-
         return (
             <React.Fragment>
                 <form onSubmit={this.handleSubmit}>
                     <ReclamationForm
                         change={this.handleChangeReclamation}
                         value={this.state.reclamation}
-                        formForEdit={true}
+                        formForEdit={false}
                     />
 
                     <ClientForm
@@ -91,16 +111,11 @@ class EditReclamation extends React.Component {
                         change={this.handleChangeInformations}
                         value={this.state.informations}
                     />
-
-                    <ActionHistoryForm
-                        actionHistory={this.state.history}
-                        add={this.handleAddAction}
-                    />
-                    <input type="submit" value="Zapisz" />
+                    <input type="submit" value="Dodaj reklamację" />
                 </form>
             </React.Fragment>
         )
     }
 }
 
-export default EditReclamation;
+export default AddReclamation;

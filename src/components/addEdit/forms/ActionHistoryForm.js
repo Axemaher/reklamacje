@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { CurrentDate } from './CurrentDate'
+import { CurrentDate } from '../CurrentDate'
 
 class ActionHistoryForm extends Component {
     constructor(props) {

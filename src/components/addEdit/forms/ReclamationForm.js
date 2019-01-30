@@ -25,7 +25,12 @@ const ReclamationForm = (props) => {
                 Opis usterki:
 <textarea type="text" name="problemDesc" onChange={props.change} value={props.value.problemDesc} />
             </label> <br />
+            <label>
+                Numer dokumentu sprzedaży:
+<input type="text" name="sellNumber" onChange={props.change} value={props.value.sellNumber} />
+            </label> <br />
         </fieldset>
     )
 }
 export default ReclamationForm
+

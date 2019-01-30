@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
-import ReclamationsList from './ReclamationsList';
-import AddReclamation from './AddReclamation';
-import EditReclamation from './EditReclamation';
-import DetailsReclamation from './DetailsReclamation';
+import ReclamationsList from './list/ReclamationsList';
+import AddReclamation from './addEdit/AddReclamation';
+import EditReclamation from './addEdit/EditReclamation';
 import { fbase, firebaseApp } from '../fbase';
+import '../index.css'
 
 
 class App extends Component {
@@ -126,15 +126,6 @@ class App extends Component {
                                                 content={this.state.content}
                                             />}
                                     />
-                                    <Route
-                                        path="/details/:id"
-                                        render={(props) =>
-                                            <DetailsReclamation
-                                                {...props}
-                                                content={this.state.content}
-                                            />}
-                                    />
-
                                 </Switch>
                             </>
                         </Router>
