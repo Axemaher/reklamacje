@@ -5,9 +5,234 @@ body {
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+	-moz-osx-font-smoothing: grayscale;
+	width: 100vw;
+	height: 100vh;
+	background-color: white;
 }
 
+*{
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+	font-family: 'PT Sans', sans-serif;
+}
+	.container {
+		width: 100vw;
+		height: 100vh;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+	.container-app {
+		display: block;
+		padding: 0 50px;
+		width: 100vw;
+		max-width: 1600px;
+		margin: 0 auto;
+	}
+	.login {
+		width: 360px;
+		height: 360px;
+		padding: 40px;
+		background-color: white;
+	}
+ .input-container {
+	width: 100%;
+	height: 40px;
+	background-color: #e6e6e6;
+	display: flex;
+	margin-bottom: 20px;
+ }
+ .input-container input{
+	padding-left: 20px;
+	width: 100%;
+	height: 100%;
+	background-color: transparent;
+	border: none;
+ }
+ .input-container input::placeholder { 
+		color: #0d8ccc;
+		font-size: 14px;
+		font-weight: bold;
+		opacity: 0.7; 
+	}
+.input-container span{
+	width: 40px;
+	height: 40px;
+	background-color: #0d8ccc;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+ }
+.input-container span{
+	font-size: 19px;
+	color: white;
+ }
+.title {
+	font-size: 25px;
+	font-weight: bold;
+	color: #0d8ccc;
+	padding: 0 0 50px;
+}
+
+/*  checkbox  */
+
+	.control-group {
+		display: inline-block;
+		vertical-align: top;
+		background: #fff;
+		text-align: left;
+		box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+		padding: 30px;
+		width: 200px;
+		height: 210px;
+		margin: 10px;
+	}
+	.control {
+		display: block;
+		position: relative;
+		padding-left: 20px;
+		margin-bottom: 15px;
+		cursor: pointer;
+		font-size: 14px;
+	}
+	.control input {
+		position: absolute;
+		z-index: -1;
+		opacity: 0;
+	}
+	.control__indicator {
+		position: absolute;
+		top: 2px;
+		left: 0;
+		height: 15px;
+		width: 15px;
+		background: transparent;
+		border: 2px solid #0d8ccc;
+	}
+	.control input:checked ~ .control__indicator {
+		background: #0d8ccc;
+	}
+
+	.control input:disabled ~ .control__indicator {
+		background: transparent;
+		opacity: 0.6;
+		pointer-events: none;
+	}
+	.control__indicator:after {
+		content: '';
+		position: absolute;
+		display: none;
+	}
+	.control input:checked ~ .control__indicator:after {
+		display: block;
+	}
+	.control.control--checkbox {
+		color: #0d8ccc;
+	}
+	.control--checkbox .control__indicator:after {
+		left: 3px;
+		top: 0px;
+		width: 3px;
+		height: 8px;
+		border: solid #fff;
+		border-width: 0 2px 2px 0;
+		transform: rotate(45deg);
+	}
+
+	/* LOGIN FORM */
+	.login-btn {
+		width: 100%;
+		height: 40px;
+		background-color: #0d8ccc;
+		border: none;
+		color: #fff;
+		margin-top: 20px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+	.loading *{
+		font-size: 20px;
+		-webkit-animation: rotation 2s infinite linear;
+		transform-origin: center;
+		margin-left: 10px;
+	}
+	
+	@-webkit-keyframes rotation {
+		from {
+			-webkit-transform: rotate(0deg);
+		}
+		to {
+			-webkit-transform: rotate(359deg);
+		}
+	}
+	/* MENU */
+
+	.btn {
+		text-decoration: none;
+		margin: 20px 10px 20px;
+		width: auto;
+		padding:0 30px;
+		height: 40px;
+		background-color: #0d8ccc;
+		border: none;
+		color: #ededed;
+		display: flex;
+		align-items: center;
+		font-weight: bold;
+		font-size: 16px;
+		cursor: pointer;
+		box-sizing: border-box;
+	}
+	.btn:hover > span{
+		color: white ;
+	}
+	.btn span{
+		transition-duration:0.3s;
+		margin-right: 10px;
+		font-size: 20px;
+	}
+	nav{
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		border-bottom: 4px solid #0d8ccc;
+	}
+	nav ul {
+		display: flex;
+	}
+	nav ul li{
+		list-style: none;
+	}
+	nav ul li span {
+		margin-right: 10px;
+	}
+
+	/* MODAL */
+	.modal {
+		position: fixed; /* Stay in place */
+		z-index: 1; /* Sit on top */
+		left: 0;
+		top: 0;
+		width: 100%; /* Full width */
+		height: 100%; /* Full height */
+		overflow: auto; /* Enable scroll if needed */
+		background-color: rgb(0,0,0); /* Fallback color */
+		background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+	}
+	
+	/* Modal Content/Box */
+	.modal-content {
+		background-color: #fefefe;
+		margin: 15% auto; /* 15% from the top and centered */
+		padding: 20px;
+		border: 1px solid #888;
+		width: 80%; /* Could be more or less, depending on screen size */
+	}
+
+/* TABLE */
 
 .table {
   width: 100%;
@@ -35,3 +260,46 @@ body {
 .table tbody tr:hover {
   background-color: bisque;
 }
+
+
+/*==================================================================
+[ Fix header ]*/
+.table100 {
+  position: relative;
+  padding-top: 60px;
+}
+
+.table100-head {
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
+}
+
+.table100-body {
+  max-height: 585px;
+  overflow: auto;
+}
+
+
+.table100.ver4 {
+  overflow: hidden;
+}
+
+.table100.ver4 .table100-body{
+  padding-right: 20px;
+}
+
+.table100.ver4 .ps__rail-y {
+  right: 0px;
+}
+
+.table100.ver4 .ps__rail-y::before {
+  background-color: #ebebeb;
+}
+
+.table100.ver4 .ps__rail-y .ps__thumb-y::before {
+  background-color: #cccccc;
+}
+
+

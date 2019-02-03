@@ -1,10 +1,15 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import ReclamationsList from './list/ReclamationsList';
 import AddReclamation from './addEdit/AddReclamation';
 import EditReclamation from './addEdit/EditReclamation';
-import { fbase, firebaseApp } from '../fbase';
+import LoginForm from './LoginForm';
+import Menu from './Menu';
+import { fbase } from '../fbase';
 import '../index.css'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faAt, faLock, faSpinner, faFileSignature, faList, faCog, faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
+library.add(faAt, faLock, faSpinner, faFileSignature, faList, faCog, faSignOutAlt)
 
 
 class App extends Component {
@@ -12,9 +17,7 @@ class App extends Component {
         super(props);
         this.state = {
             content: [],
-            loggedIn: false,
-            email: "",
-            password: "",
+            loggedIn: false
         }
     }
     add = (newData) => {
@@ -34,7 +37,21 @@ class App extends Component {
         })
 
     }
+    loginSuccess = () => {
+        this.setState({
+            loggedIn: true
+        })
+    }
+    logOut = () => {
+        localStorage.removeItem("loggedIn")
 
+        this.setState({
+            loggedIn: false
+        })
+    }
+    handleSettings = () => {
+        localStorage.setItem('columns', JSON.stringify(this.state.columnsToShow));
+    }
     componentDidMount() {
         if (localStorage.getItem("loggedIn")) {
             this.setState({
@@ -46,59 +63,32 @@ class App extends Component {
             state: 'content'
         })
     }
-
     componentWillUnmount() {
         fbase.removeBinding(this.ref)
     }
-    handleLoginChange = (e) => {
-        this.setState({
-            [e.target.name]: e.target.value
-        })
-    }
-    authenticate = (e) => {
-        e.preventDefault();
-        firebaseApp.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
-            .then(() => {
-                this.setState({
-                    loggedIn: true
-                });
-                localStorage.setItem("loggedIn", true);
-            })
-            .catch(() => {
-                console.log("Wrong data to login")
-            })
-    }
+
     render() {
         return (
             <div>
                 {!this.state.loggedIn &&
-                    <form onSubmit={this.authenticate}>
-                        <input
-                            placeholder="email"
-                            type="email"
-                            name="email"
-                            onChange={this.handleLoginChange}
-                            value={this.state.email} />
-                        <input
-                            type="password"
-                            name="password"
-                            onChange={this.handleLoginChange}
-                            value={this.state.password} />
-                        <button type="submit">Login</button>
-                    </form>
+                    <LoginForm loginSuccess={this.loginSuccess} />
                 }
                 {this.state.loggedIn &&
-                    <div>
+                    <div className="container container-app">
                         <Router>
                             <>
-                                <ul>
+                                {/* <ul>
                                     <li>
                                         <Link to="/">Lista reklamacji</Link>
                                     </li>
                                     <li>
                                         <Link to="/add">Dodaj</Link>
                                     </li>
-                                </ul>
+                                    <li>
+                                        <button onClick={this.logOut}>Wyloguj</button>
+                                    </li>
+                                </ul> */}
+                                <Menu logOut={this.logOut} settings={this.handleSettings} />
                                 <Switch>
                                     <Route
                                         exact path="/"
