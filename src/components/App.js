@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import ReclamationsList from './list/ReclamationsList';
-import AddReclamation from './addEdit/AddReclamation';
-import EditReclamation from './addEdit/EditReclamation';
+import ReclamationsList from './ReclamationsList';
+import AddReclamation from './AddReclamation';
+import EditReclamation from './EditReclamation';
 import LoginForm from './LoginForm';
 import Menu from './Menu';
 import { fbase } from '../fbase';
@@ -17,7 +17,8 @@ class App extends Component {
         super(props);
         this.state = {
             content: [],
-            loggedIn: false
+            loggedIn: false,
+            settings: false
         }
     }
     add = (newData) => {
@@ -50,7 +51,7 @@ class App extends Component {
         })
     }
     handleSettings = () => {
-        localStorage.setItem('columns', JSON.stringify(this.state.columnsToShow));
+        this.setState({ settings: !this.state.settings })
     }
     componentDidMount() {
         if (localStorage.getItem("loggedIn")) {
@@ -77,18 +78,7 @@ class App extends Component {
                     <div className="container container-app">
                         <Router>
                             <>
-                                {/* <ul>
-                                    <li>
-                                        <Link to="/">Lista reklamacji</Link>
-                                    </li>
-                                    <li>
-                                        <Link to="/add">Dodaj</Link>
-                                    </li>
-                                    <li>
-                                        <button onClick={this.logOut}>Wyloguj</button>
-                                    </li>
-                                </ul> */}
-                                <Menu logOut={this.logOut} settings={this.handleSettings} />
+                                <Menu logOut={this.logOut} handleSettings={this.handleSettings} settingsState={this.state.settings} />
                                 <Switch>
                                     <Route
                                         exact path="/"

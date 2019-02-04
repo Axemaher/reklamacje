@@ -1,9 +1,9 @@
 import React from 'react';
 import uuid from 'uuid';
-import { CurrentDate } from '../addEdit/CurrentDate'
-import InformationsForm from '../addEdit/forms/InformationsForm';
-import ClientForm from '../addEdit/forms/ClientForm';
-import ReclamationForm from '../addEdit/forms/ReclamationForm';
+import { CurrentDate } from './CurrentDate'
+import InformationsForm from './InformationsForm';
+import ClientForm from './ClientForm';
+import ReclamationForm from './ReclamationForm';
 
 
 class AddReclamation extends React.Component {
@@ -94,8 +94,9 @@ class AddReclamation extends React.Component {
     }
     render() {
         return (
-            <React.Fragment>
-                <form onSubmit={this.handleSubmit}>
+
+            <form onSubmit={this.handleSubmit}>
+                <div className="addForm">
                     <ReclamationForm
                         change={this.handleChangeReclamation}
                         value={this.state.reclamation}
@@ -111,9 +112,10 @@ class AddReclamation extends React.Component {
                         change={this.handleChangeInformations}
                         value={this.state.informations}
                     />
-                    <input type="submit" value="Dodaj reklamację" />
-                </form>
-            </React.Fragment>
+                </div>
+                <button className="btn" type="submit" >Dodaj</button>
+            </form>
+
         )
     }
 }

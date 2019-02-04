@@ -1,42 +1,16 @@
 import React from 'react';
-import ColumnsSettings from './forms/ColumnsSettings'
 import { Link } from 'react-router-dom';
 
 class ReclamationsList extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            columnsToShow: {
-                addDate: true,
-                warranty: true,
-                manufacturer: true,
-                model: true,
-                problemDesc: true,
-                ended: true,
-                sellNumber: true,
-                company: true,
-                nip: true,
-                name: true,
-                nick: true,
-                tel: true,
-                mail: true,
-                notes: true,
-                other: true,
-                lastHistory: true
-            },
+            columnsToShow: {},
             updated: false,
             sorting: "sorted"
 
         }
         this.reclamations = null
-    }
-
-    handleChange = (e) => {
-        this.setState({
-            columnsToShow: {
-                ...this.state.columnsToShow, [e.target.name]: e.target.checked
-            }
-        })
     }
 
     handleSort = (dataSort) => {
@@ -122,11 +96,13 @@ class ReclamationsList extends React.Component {
         }
         this.setState({ updated: true })
     }
-
-    saveColumns = () => {
-        localStorage.setItem('columns', JSON.stringify(this.state.columnsToShow));
-    }
     componentDidMount() {
+        if (localStorage.getItem('columns') === null) {
+            return
+        }
+        this.setState({ columnsToShow: JSON.parse(localStorage.getItem('columns')) })
+    }
+    componentWillReceiveProps() {
         if (localStorage.getItem('columns') === null) {
             return
         }
@@ -240,7 +216,6 @@ class ReclamationsList extends React.Component {
                                 </tr>)}
                         </tbody>
                     </table>
-                    <button onClick={this.saveColumns}>Save columns</button>
                 </div >
             </div>
 

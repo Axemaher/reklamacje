@@ -1,8 +1,8 @@
 import React from 'react';
-import ActionHistoryForm from '../addEdit/forms/ActionHistoryForm';
-import InformationsForm from '../addEdit/forms/InformationsForm';
-import ClientForm from '../addEdit/forms/ClientForm';
-import ReclamationForm from '../addEdit/forms/ReclamationForm';
+import ActionHistoryForm from './ActionHistoryForm';
+import InformationsForm from './InformationsForm';
+import ClientForm from './ClientForm';
+import ReclamationForm from './ReclamationForm';
 
 class EditReclamation extends React.Component {
     constructor(props) {
@@ -76,27 +76,28 @@ class EditReclamation extends React.Component {
         return (
             <React.Fragment>
                 <form onSubmit={this.handleSubmit}>
-                    <ReclamationForm
-                        change={this.handleChangeReclamation}
-                        value={this.state.reclamation}
-                        formForEdit={true}
-                    />
-
-                    <ClientForm
-                        change={this.handleChangeClient}
-                        value={this.state.client}
-                    />
-
-                    <InformationsForm
-                        change={this.handleChangeInformations}
-                        value={this.state.informations}
-                    />
-
                     <ActionHistoryForm
                         actionHistory={this.state.history}
                         add={this.handleAddAction}
                     />
-                    <input type="submit" value="Zapisz" />
+                    <div className="addForm">
+                        <ReclamationForm
+                            change={this.handleChangeReclamation}
+                            value={this.state.reclamation}
+                            formForEdit={true}
+                        />
+
+                        <ClientForm
+                            change={this.handleChangeClient}
+                            value={this.state.client}
+                        />
+
+                        <InformationsForm
+                            change={this.handleChangeInformations}
+                            value={this.state.informations}
+                        />
+                    </div>
+                    <button className="btn" type="submit">Zapisz</button>
                 </form>
             </React.Fragment>
         )

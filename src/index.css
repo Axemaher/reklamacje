@@ -104,7 +104,7 @@ body {
 	}
 	.control__indicator {
 		position: absolute;
-		top: 2px;
+		top: 0;
 		left: 0;
 		height: 15px;
 		width: 15px;
@@ -216,8 +216,11 @@ body {
 		z-index: 1; /* Sit on top */
 		left: 0;
 		top: 0;
-		width: 100%; /* Full width */
-		height: 100%; /* Full height */
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: 100vw; /* Full width */
+		height: 100vh; /* Full height */
 		overflow: auto; /* Enable scroll if needed */
 		background-color: rgb(0,0,0); /* Fallback color */
 		background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
@@ -226,10 +229,98 @@ body {
 	/* Modal Content/Box */
 	.modal-content {
 		background-color: #fefefe;
-		margin: 15% auto; /* 15% from the top and centered */
-		padding: 20px;
+		padding: 40px;
 		border: 1px solid #888;
-		width: 80%; /* Could be more or less, depending on screen size */
+		width: 40%; /* Could be more or less, depending on screen size */
+	}
+	.modal-content form {
+		display: flex;
+		justify-content: center;
+		flex-wrap: wrap;
+	}
+	.col > div{
+		padding: 0 20px;
+	}
+
+	/* ADD/EDIT FORM */
+
+	.addForm {
+		display: flex;
+		justify-content: space-between;
+	}
+	.form-fieldset{
+		width: 33.3%;
+		padding: 20px;
+	}
+	.form-fieldset fieldset {
+		padding: 20px;
+		border-color: #e5e5e5;
+	}
+	.form-fieldset label {
+		display: block;
+		padding-bottom: 10px;
+	  }
+	  .form-fieldset p {
+		display: flex;
+		justify-content: space-between;
+		margin-bottom: 4px;
+		font-size: 1.2em;
+	padding-bottom: 10px;		
+	  }
+	  
+	.form-fieldset input,
+	.form-fieldset textarea {
+		display: block;
+		padding: 4px;
+		font-size: 1.2em;
+		width: 100%;
+		margin-bottom: 4px;
+		border-radius: 3px;
+		border: 1px solid #BABABA;
+	  }
+	  .form-fieldset textarea {
+		  min-height: 100px;
+	  }
+	  .form-fieldset legend {
+		  font-size: 2.5em;
+		  font-weight: bold;
+		  color: #0d8ccc;
+	  }
+	  .form-fieldset .control-group {
+		display: inline-block;
+		vertical-align: top;
+		background: #fff;
+		text-align: left;
+		box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+		padding: 30px;
+		width: 200px;
+		height: 210px;
+		margin: 10px;
+	}
+	.form-fieldset .control__indicator {
+		border: 2px solid #969696;
+	}
+	.form-fieldset .control input:checked ~ .control__indicator {
+		background: #e5e5e5;
+	}
+
+	.form-fieldset .control.control--checkbox {
+		color: black;
+	}
+	.form-fieldset .control--checkbox .control__indicator:after {
+		left: 3px;
+		top: 0px;
+		width: 3px;
+		height: 8px;
+		border: solid black;
+		border-width: 0 2px 2px 0;
+		transform: rotate(45deg);
+	}
+	.historyForm {
+		width: 100%;
+	}
+	.historyForm fieldset {
+		width: 100%;
 	}
 
 /* TABLE */

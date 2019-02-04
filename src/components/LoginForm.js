@@ -84,7 +84,7 @@ class LoginForm extends React.Component {
                                 onChange={this.handleLoginChange}
                             />
                         </div>
-                        <div className="savePassword">
+                        <div>
                             <label htmlFor="savePassword" className="control control--checkbox">
                                 zapisz hasło
                                 <input
