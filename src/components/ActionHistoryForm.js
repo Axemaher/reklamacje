@@ -23,20 +23,34 @@ class ActionHistoryForm extends Component {
         this.props.add(newAction)
     }
     render() {
+        const historyTable = this.props.actionHistory.map((action, index) =>
+            <tr key={index}>
+                <td>{action.desc}</td>
+                <td>{action.date}</td>
+            </tr>
+        );
         return (
-            <div className="form-fieldset history-form">
+            <div className="form-history-fieldset history-form">
                 <fieldset name="action history">
                     <legend>Podjęte działania</legend>
-                    <ul>
-                        {this.props.actionHistory.map((action, index) =>
-                            <li key={index}>{action.desc} - - {action.date}</li>
-                        )}
-                    </ul>
+
+                    <table className="table">
+                        <thead>
+                            <tr>
+                                <th>Wykonana interwencja</th>
+                                <th>Data</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {historyTable}
+                        </tbody>
+                    </table>
+
                     <label>
-                        Dodaj działanie:<br />
+                        Dodaj działanie:
                         <input type="text" name="newAction" onChange={this.handleChangeAction} value={this.state.actionValue} />
-                        <button onClick={this.handleAdd}>Dodaj</button>
-                    </label> <br />
+                        <button className="btn" onClick={this.handleAdd}>Dodaj</button>
+                    </label>
                 </fieldset>
             </div>
         );

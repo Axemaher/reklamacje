@@ -30,6 +30,8 @@ body {
 		width: 100vw;
 		max-width: 1600px;
 		margin: 0 auto;
+		/* overflow-x: hidden; */
+
 	}
 	.login {
 		width: 360px;
@@ -229,14 +231,25 @@ body {
 	/* Modal Content/Box */
 	.modal-content {
 		background-color: #fefefe;
-		padding: 40px;
+		padding: 30px;
 		border: 1px solid #888;
-		width: 40%; /* Could be more or less, depending on screen size */
+		width: auto; /* Could be more or less, depending on screen size */
 	}
-	.modal-content form {
+	.modal-content .row {
 		display: flex;
 		justify-content: center;
-		flex-wrap: wrap;
+	}
+	.save-container-settings {
+		display: flex;
+		justify-content: center;
+	}
+	.save-container {
+		display: flex;
+		justify-content: center;
+		bottom: 0;
+		left: 0;
+		width: 100%;
+		position: fixed;
 	}
 	.col > div{
 		padding: 0 20px;
@@ -252,15 +265,21 @@ body {
 		width: 33.3%;
 		padding: 20px;
 	}
-	.form-fieldset fieldset {
+	.form-history-fieldset {
+		padding: 20px;
+	}
+	.form-fieldset fieldset,
+	.form-history-fieldset fieldset {
 		padding: 20px;
 		border-color: #e5e5e5;
 	}
-	.form-fieldset label {
+	.form-fieldset label,
+	.form-history-fieldset label {
 		display: block;
 		padding-bottom: 10px;
 	  }
-	  .form-fieldset p {
+	  .form-fieldset p,
+	  .form-history-fieldset p {
 		display: flex;
 		justify-content: space-between;
 		margin-bottom: 4px;
@@ -269,7 +288,8 @@ body {
 	  }
 	  
 	.form-fieldset input,
-	.form-fieldset textarea {
+	.form-fieldset textarea,
+	.form-history-fieldset input {
 		display: block;
 		padding: 4px;
 		font-size: 1.2em;
@@ -281,7 +301,8 @@ body {
 	  .form-fieldset textarea {
 		  min-height: 100px;
 	  }
-	  .form-fieldset legend {
+	  .form-fieldset legend,
+	  .form-history-fieldset legend {
 		  font-size: 2.5em;
 		  font-weight: bold;
 		  color: #0d8ccc;
@@ -316,11 +337,8 @@ body {
 		border-width: 0 2px 2px 0;
 		transform: rotate(45deg);
 	}
-	.historyForm {
-		width: 100%;
-	}
-	.historyForm fieldset {
-		width: 100%;
+	.history-form input{
+		max-width: 300px;
 	}
 
 /* TABLE */
@@ -329,11 +347,12 @@ body {
   width: 100%;
   display: table;
   border-collapse: separate;
-  border-spacing: 2px;
   border-color: grey;
   margin-bottom: 1rem;
   background-color: transparent;
-  font-size: 10px;
+  font-size: 14px;
+  border-spacing: 0;
+  text-align: left;
 }
 .table thead {
   display: table-header-group;
@@ -344,6 +363,10 @@ body {
   padding: .75rem;
   vertical-align: top;
   border-top: 1px solid #dee2e6;
+}
+.table tbody th {
+	font-weight: initial;
+
 }
 .table tbody tr:nth-child(even){
   background-color: aliceblue;
@@ -369,12 +392,12 @@ body {
 
 .table100-body {
   max-height: 585px;
-  overflow: auto;
+  /* overflow: auto; */
 }
 
 
 .table100.ver4 {
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 
 .table100.ver4 .table100-body{

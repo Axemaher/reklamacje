@@ -126,7 +126,7 @@ class ReclamationsList extends React.Component {
                                     <span onClick={() => this.handleSort("date")}>&#8711;</span>
                                     </th>}
                                 {warranty &&
-                                    <th>Gwarancyjna
+                                    <th>GW
                                     <span onClick={() => this.handleSort("warranty")}>&#8711;</span>
                                     </th>}
                                 {manufacturer &&
@@ -138,7 +138,7 @@ class ReclamationsList extends React.Component {
                                     <span onClick={() => this.handleSort("model")}>&#8711;</span>
                                     </th>}
                                 {problemDesc &&
-                                    <th>Opis usterki
+                                    <th>Usterka
                                     <span onClick={() => this.handleSort("problemDesc")}>&#8711;</span>
                                     </th>}
                                 {ended &&
@@ -182,7 +182,7 @@ class ReclamationsList extends React.Component {
                                     <span onClick={() => this.handleSort("other")}>&#8711;</span>
                                     </th>}
                                 {lastHistory &&
-                                    <th>Ostatnia akcja
+                                    <th>Ostatnia interwencja
                                     <span onClick={() => this.handleSort("lastHistory")}>&#8711;</span>
                                     </th>}
                             </tr>

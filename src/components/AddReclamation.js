@@ -4,6 +4,7 @@ import { CurrentDate } from './CurrentDate'
 import InformationsForm from './InformationsForm';
 import ClientForm from './ClientForm';
 import ReclamationForm from './ReclamationForm';
+import { Link } from 'react-router-dom'
 
 
 class AddReclamation extends React.Component {
@@ -34,8 +35,7 @@ class AddReclamation extends React.Component {
         id: ""
     }
 
-    handleSubmit = (e) => {
-        e.preventDefault();
+    handleSave = (e) => {
         let stateCopy = this.state;
         let reclamationNumber = null
         if (isNaN(this.props.reclamationCounter)) {
@@ -95,7 +95,9 @@ class AddReclamation extends React.Component {
     render() {
         return (
 
-            <form onSubmit={this.handleSubmit}>
+            // <form onSubmit={this.handleSubmit}>
+            <form>
+
                 <div className="addForm">
                     <ReclamationForm
                         change={this.handleChangeReclamation}
@@ -113,7 +115,10 @@ class AddReclamation extends React.Component {
                         value={this.state.informations}
                     />
                 </div>
-                <button className="btn" type="submit" >Dodaj</button>
+                <div className="save-container">
+                    <Link className="btn btn-save" onClick={this.handleSave} to="/">Dodaj</Link>
+                </div>
+                {/* <button className="btn btn-save" type="submit" >Dodaj</button></div> */}
             </form>
 
         )

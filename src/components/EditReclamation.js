@@ -3,6 +3,8 @@ import ActionHistoryForm from './ActionHistoryForm';
 import InformationsForm from './InformationsForm';
 import ClientForm from './ClientForm';
 import ReclamationForm from './ReclamationForm';
+import { Link } from 'react-router-dom'
+
 
 class EditReclamation extends React.Component {
     constructor(props) {
@@ -21,13 +23,12 @@ class EditReclamation extends React.Component {
             history: edited.history,
         })
     }
-    handleSubmit = (e) => {
-        e.preventDefault();
+    handleSave = (e) => {
         let newData = this.state;
         this.props.handleEdit(newData)
     }
     handleChangeReclamation = (e) => {
-        if (e.target.name === "warranty") {
+        if (e.target.name === "warranty" || e.target.name === "ended") {
             this.setState({
                 reclamation: {
                     ...this.state.reclamation, [e.target.name]: e.target.checked
@@ -75,7 +76,9 @@ class EditReclamation extends React.Component {
 
         return (
             <React.Fragment>
-                <form onSubmit={this.handleSubmit}>
+                <form className="form">
+                    {/* <form className="form" onSubmit={this.handleSubmit}> */}
+
                     <ActionHistoryForm
                         actionHistory={this.state.history}
                         add={this.handleAddAction}
@@ -97,7 +100,9 @@ class EditReclamation extends React.Component {
                             value={this.state.informations}
                         />
                     </div>
-                    <button className="btn" type="submit">Zapisz</button>
+                    <div className="save-container">
+                        <Link className="btn btn-save" onClick={this.handleSave} to="/">Zapisz</Link>
+                    </div>
                 </form>
             </React.Fragment>
         )

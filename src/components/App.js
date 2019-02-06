@@ -67,7 +67,6 @@ class App extends Component {
     componentWillUnmount() {
         fbase.removeBinding(this.ref)
     }
-
     render() {
         return (
             <div>

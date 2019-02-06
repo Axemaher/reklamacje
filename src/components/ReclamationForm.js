@@ -8,7 +8,20 @@ const ReclamationForm = (props) => {
                     <>
                         <p>Numer: <span>{props.value.number}</span></p>
                         <p>Data rozpoczęcia: <span>{props.value.addDate}</span></p>
-                        <p>Status: <span>{props.value.ended ? "Zakończona" : "W trakcie"}</span></p>
+                        {/* <p>Status: <span>{props.value.ended ? "Zakończona" : "W trakcie"}</span></p> */}
+                        <div>
+                            <label htmlFor="ended" className="control control--checkbox">
+                                Zakończono
+                                <input
+                                    type="checkbox"
+                                    id="ended"
+                                    name="ended"
+                                    onChange={props.change}
+                                    checked={props.value.ended}
+                                />
+                                <div className="control__indicator"></div>
+                            </label>
+                        </div>
                     </>}
                 <div>
                     <label htmlFor="warranty" className="control control--checkbox">

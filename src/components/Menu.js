@@ -11,9 +11,6 @@ class Menu extends React.Component {
             settings: false
         }
     }
-    // handleSettings = () => {
-    //     this.setState({ settings: !this.state.settings })
-    // }
     render() {
         return (
             <>
