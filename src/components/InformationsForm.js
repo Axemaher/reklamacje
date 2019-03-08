@@ -5,11 +5,11 @@ const InformationsForm = (props) => {
             <fieldset name="informations">
                 <legend>Notatki</legend>
                 <label>
-                    Informacje dodatkowe:<br />
+                    Notatki:<br />
                     <textarea type="text" name="note" onChange={props.change} value={props.value.note} />
                 </label> <br />
                 <label>
-                    notatki:<br />
+                    Informacje dodatkowe:<br />
                     <textarea type="text" name="other" onChange={props.change} value={props.value.other} />
                 </label> <br />
             </fieldset>

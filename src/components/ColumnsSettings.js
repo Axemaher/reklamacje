@@ -29,227 +29,46 @@ class ColumnsSettings extends React.Component {
     }
     render() {
         const { addDate, warranty, manufacturer, model, problemDesc, ended, sellNumber, company, nip, name, nick, tel, mail, notes, other, lastHistory } = this.state.columnsToShow;
+        const checkboxData = [
+            { name: "addDate", label: "Data dodania", checked: addDate },
+            { name: "warranty", label: "Gwarancja", checked: warranty },
+            { name: "manufacturer", label: "Producent", checked: manufacturer },
+            { name: "model", label: "Model", checked: model },
+            { name: "problemDesc", label: "Usterka", checked: problemDesc },
+            { name: "ended", label: "Status", checked: ended },
+            { name: "sellNumber", label: "Nr. dokumentu sprzedaży", checked: sellNumber },
+            { name: "company", label: "Firma", checked: company },
+            { name: "nip", label: "Nip", checked: nip },
+            { name: "name", label: "Kontrahent", checked: name },
+            { name: "nick", label: "Nick", checked: nick },
+            { name: "tel", label: "Tel", checked: tel },
+            { name: "mail", label: "Mail", checked: mail },
+            { name: "notes", label: "Notatki", checked: notes },
+            { name: "other", label: "Inne", checked: other },
+            { name: "lastHistory", label: "Ostatnia interwencja", checked: lastHistory },
+        ]
         return (
             <div className="modal">
                 <div className="modal-content">
-                    {/* <form onSubmit={this.handleSave}> */}
                     <form>
-
                         <div className="row">
-                            <div className="col">
-                                <div>
-                                    <label htmlFor="addDate" className="control control--checkbox">
-                                        Data dodania
-                                <input
-                                            type="checkbox"
-                                            id="addDate"
-                                            name="addDate"
-                                            checked={addDate}
-                                            onChange={this.handleChange}
-                                        />
-                                        <div className="control__indicator"></div>
-                                    </label>
-                                </div>
-                                <div>
-                                    <label htmlFor="warranty" className="control control--checkbox">
-                                        Gwarancyjna?
-                                <input
-                                            type="checkbox"
-                                            id="warranty"
-                                            name="warranty"
-                                            checked={warranty}
-                                            onChange={this.handleChange}
-                                        />
-                                        <div className="control__indicator"></div>
-                                    </label>
-                                </div>
-
-                                <div>
-                                    <label htmlFor="manufacturer" className="control control--checkbox">
-                                        Producent
-                                <input
-                                            type="checkbox"
-                                            id="manufacturer"
-                                            name="manufacturer"
-                                            checked={manufacturer}
-                                            onChange={this.handleChange}
-                                        />
-                                        <div className="control__indicator"></div>
-                                    </label>
-                                </div>
-                                <div>
-                                    <label htmlFor="model" className="control control--checkbox">
-                                        Model
-                                <input
-                                            type="checkbox"
-                                            id="model"
-                                            name="model"
-                                            checked={model}
-                                            onChange={this.handleChange}
-                                        />
-                                        <div className="control__indicator"></div>
-                                    </label>
-                                </div>
-                                <div>
-                                    <label htmlFor="problemDesc" className="control control--checkbox">
-                                        Opis usterki
-                                <input
-                                            type="checkbox"
-                                            id="problemDesc"
-                                            name="problemDesc"
-                                            checked={problemDesc}
-                                            onChange={this.handleChange}
-                                        />
-                                        <div className="control__indicator"></div>
-                                    </label>
-                                </div>
-                                <div>
-                                    <label htmlFor="ended" className="control control--checkbox">
-                                        Zakończona?
-                                <input
-                                            type="checkbox"
-                                            id="ended"
-                                            name="ended"
-                                            checked={ended}
-                                            onChange={this.handleChange}
-                                        />
-                                        <div className="control__indicator"></div>
-                                    </label>
-                                </div>
-                                <div>
-                                    <label htmlFor="sellNumber" className="control control--checkbox">
-                                        Nr dok. sprzedaży
-                                <input
-                                            type="checkbox"
-                                            id="sellNumber"
-                                            name="sellNumber"
-                                            checked={sellNumber}
-                                            onChange={this.handleChange}
-                                        />
-                                        <div className="control__indicator"></div>
-                                    </label>
-                                </div>
-                                <div>
-                                    <label htmlFor="company" className="control control--checkbox">
-                                        Firma
-                                <input
-                                            type="checkbox"
-                                            id="company"
-                                            name="company"
-                                            checked={company}
-                                            onChange={this.handleChange}
-                                        />
-                                        <div className="control__indicator"></div>
-                                    </label>
-                                </div>
-                            </div>
-                            <div className="col">
-                                <div>
-                                    <label htmlFor="nip" className="control control--checkbox">
-                                        NIP
-                                <input
-                                            type="checkbox"
-                                            id="nip"
-                                            name="nip"
-                                            checked={nip}
-                                            onChange={this.handleChange}
-                                        />
-                                        <div className="control__indicator"></div>
-                                    </label>
-                                </div>
-                                <div>
-                                    <label htmlFor="name" className="control control--checkbox">
-                                        Kontrahent
-                                <input
-                                            type="checkbox"
-                                            id="name"
-                                            name="name"
-                                            checked={name}
-                                            onChange={this.handleChange}
-                                        />
-                                        <div className="control__indicator"></div>
-                                    </label>
-                                </div>
-                                <div>
-                                    <label htmlFor="nick" className="control control--checkbox">
-                                        Nick
-                                <input
-                                            type="checkbox"
-                                            id="nick"
-                                            name="nick"
-                                            checked={nick}
-                                            onChange={this.handleChange}
-                                        />
-                                        <div className="control__indicator"></div>
-                                    </label>
-                                </div>
-                                <div>
-                                    <label htmlFor="tel" className="control control--checkbox">
-                                        Nr tel.
-                                <input
-                                            type="checkbox"
-                                            id="tel"
-                                            name="tel"
-                                            checked={tel}
-                                            onChange={this.handleChange}
-                                        />
-                                        <div className="control__indicator"></div>
-                                    </label>
-                                </div>
-                                <div>
-                                    <label htmlFor="mail" className="control control--checkbox">
-                                        Email
-                                <input
-                                            type="checkbox"
-                                            id="mail"
-                                            name="mail"
-                                            checked={mail}
-                                            onChange={this.handleChange}
-                                        />
-                                        <div className="control__indicator"></div>
-                                    </label>
-                                </div>
-                                <div>
-                                    <label htmlFor="notes" className="control control--checkbox">
-                                        Notatki
-                                <input
-                                            type="checkbox"
-                                            id="notes"
-                                            name="notes"
-                                            checked={notes}
-                                            onChange={this.handleChange}
-                                        />
-                                        <div className="control__indicator"></div>
-                                    </label>
-                                </div>
-                                <div>
-                                    <label htmlFor="other" className="control control--checkbox">
-                                        Inne
-                                <input
-                                            type="checkbox"
-                                            id="other"
-                                            name="other"
-                                            checked={other}
-                                            onChange={this.handleChange}
-                                        />
-                                        <div className="control__indicator"></div>
-                                    </label>
-                                </div>
-                                <div>
-                                    <label htmlFor="lastHistory" className="control control--checkbox">
-                                        Ostatnia interwencja
-                                <input
-                                            type="checkbox"
-                                            id="lastHistory"
-                                            name="lastHistory"
-                                            checked={lastHistory}
-                                            onChange={this.handleChange}
-                                        />
-                                        <div className="control__indicator"></div>
-                                    </label>
-                                </div>
-
-                            </div>
+                            {
+                                checkboxData.map((data, index) => (
+                                    <div key={index}>
+                                        <label htmlFor={data.name} className="control control--checkbox">
+                                            {data.label}
+                                            <input
+                                                type="checkbox"
+                                                id={data.name}
+                                                name={data.name}
+                                                checked={data.checked}
+                                                onChange={this.handleChange}
+                                            />
+                                            <div className="control__indicator"></div>
+                                        </label>
+                                    </div>
+                                ))
+                            }
                         </div>
                         <div className="save-container-settings">
                             <Link className="btn" onClick={this.handleSave} type="submit" to="/">Zapisz i zamknij</Link>

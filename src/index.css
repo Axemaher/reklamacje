@@ -235,11 +235,15 @@ body {
 		border: 1px solid #888;
 		width: auto; /* Could be more or less, depending on screen size */
 	}
-	.modal-content .row {
-		display: flex;
-		justify-content: center;
+	.modal-content .row{
+		max-width: 600px;
+	}
+	.modal-content .row>div {
+		width: 300px;
+		float: left;
 	}
 	.save-container-settings {
+		clear: both;
 		display: flex;
 		justify-content: center;
 	}
@@ -251,9 +255,7 @@ body {
 		width: 100%;
 		position: fixed;
 	}
-	.col > div{
-		padding: 0 20px;
-	}
+
 
 	/* ADD/EDIT FORM */
 
@@ -360,13 +362,13 @@ body {
   border-color: inherit;
 }
 .table td, .table th {
-  padding: .75rem;
-  vertical-align: top;
+  padding: 6px;
+  vertical-align: center;
   border-top: 1px solid #dee2e6;
 }
 .table tbody th {
 	font-weight: initial;
-
+	
 }
 .table tbody tr:nth-child(even){
   background-color: aliceblue;
@@ -374,8 +376,13 @@ body {
 .table tbody tr:hover {
   background-color: bisque;
 }
-
-
+.sort-icon{
+	margin-left: 6px;
+	cursor: pointer;
+}
+.checked-icon{
+	font-size: 16px;
+}
 /*==================================================================
 [ Fix header ]*/
 .table100 {

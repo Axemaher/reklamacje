@@ -1,5 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 
 class ReclamationsList extends React.Component {
     constructor(props) {
@@ -20,13 +22,13 @@ class ReclamationsList extends React.Component {
             let x, y;
             switch (dataSort) {
                 case "date":
-                    x = a.reclamation.addDate.toLowerCase();
-                    y = b.reclamation.addDate.toLowerCase();
+                    x = a.reclamation.addDate;
+                    y = b.reclamation.addDate;
                     break;
 
                 case "warranty":
-                    x = a.reclamation.warranty.toLowerCase();
-                    y = b.reclamation.warranty.toLowerCase();
+                    x = a.reclamation.warranty;
+                    y = b.reclamation.warranty;
                     break;
 
                 case "manufacturer":
@@ -43,16 +45,16 @@ class ReclamationsList extends React.Component {
                     y = b.reclamation.problemDesc.toLowerCase();
                     break;
                 case "ended":
-                    x = a.reclamation.ended.toLowerCase();
-                    y = b.reclamation.ended.toLowerCase();
+                    x = a.reclamation.ended;
+                    y = b.reclamation.ended;
                     break;
                 case "sellNumber":
                     x = a.reclamation.sellNumber.toLowerCase();
                     y = b.reclamation.sellNumber.toLowerCase();
                     break;
                 case "company":
-                    x = a.client.company.toLowerCase();
-                    y = b.client.company.toLowerCase();
+                    x = a.client.company;
+                    y = b.client.company;
                     break;
                 case "nip":
                     x = a.client.nip.toLowerCase();
@@ -67,8 +69,8 @@ class ReclamationsList extends React.Component {
                     y = b.client.nick.toLowerCase();
                     break;
                 case "tel":
-                    x = a.client.tel.toLowerCase();
-                    y = b.client.tel.toLowerCase();
+                    x = a.client.tel;
+                    y = b.client.tel;
                     break;
                 case "mail":
                     x = a.client.mail.toLowerCase();
@@ -92,7 +94,6 @@ class ReclamationsList extends React.Component {
         } else if (this.state.sorting === "reverse") {
             this.reclamations = sorted.reverse();
             this.setState({ sorting: "sorted" })
-
         }
         this.setState({ updated: true })
     }
@@ -112,108 +113,77 @@ class ReclamationsList extends React.Component {
         if (this.state.updated === false) {
             this.reclamations = this.props.content;
         }
+
         const { addDate, warranty, manufacturer, model, problemDesc, ended, sellNumber, company, nip, name, nick, tel, mail, notes, other, lastHistory } = this.state.columnsToShow;
+        const thData = [
+            { sort: false, label: "Numer", visible: true },
+            { sort: "addDate", label: "Data dodania", visible: addDate },
+            { sort: "warranty", label: "Gwarancja", visible: warranty },
+            { sort: "manufacturer", label: "Producent", visible: manufacturer },
+            { sort: "model", label: "Model", visible: model },
+            { sort: "problemDesc", label: "Usterka", visible: problemDesc },
+            { sort: "ended", label: "Status", visible: ended },
+            { sort: "sellNumber", label: "Dok. sprzedaży", visible: sellNumber },
+            { sort: "company", label: "Firma", visible: company },
+            { sort: "nip", label: "Nip", visible: nip },
+            { sort: "name", label: "Kontrahent", visible: name },
+            { sort: "nick", label: "Nick", visible: nick },
+            { sort: "tel", label: "Tel", visible: tel },
+            { sort: "mail", label: "Mail", visible: mail },
+            { sort: "notes", label: "Notatki", visible: notes },
+            { sort: "other", label: "Inne", visible: other },
+            { sort: false, label: "Ostatnia interwencja", visible: lastHistory },
+        ]
+        const thDisplay = thData.map((data, index) => (
+            data.visible &&
+            <th key={index}>{data.label}
+                {data.sort && <span onClick={() => this.handleSort(data.sort)}><FontAwesomeIcon className="sort-icon" icon="sort" /></span>}
+            </th>
+        ))
         return (
             <div>
                 <div className="reclamationList" >
                     <table className="table">
                         <thead>
                             <tr>
-                                <th>numer reklamacji</th>
-
-                                {addDate &&
-                                    <th>Data dodania
-                                    <span onClick={() => this.handleSort("date")}>&#8711;</span>
-                                    </th>}
-                                {warranty &&
-                                    <th>GW
-                                    <span onClick={() => this.handleSort("warranty")}>&#8711;</span>
-                                    </th>}
-                                {manufacturer &&
-                                    <th>Producent
-                                    <span onClick={() => this.handleSort("manufacturer")}>&#8711;</span>
-                                    </th>}
-                                {model &&
-                                    <th>Model
-                                    <span onClick={() => this.handleSort("model")}>&#8711;</span>
-                                    </th>}
-                                {problemDesc &&
-                                    <th>Usterka
-                                    <span onClick={() => this.handleSort("problemDesc")}>&#8711;</span>
-                                    </th>}
-                                {ended &&
-                                    <th>Status
-                                    <span onClick={() => this.handleSort("ended")}>&#8711;</span>
-                                    </th>}
-                                {sellNumber &&
-                                    <th>Nr. dok.
-                                    <span onClick={() => this.handleSort("sellNumber")}>&#8711;</span>
-                                    </th>}
-                                {company &&
-                                    <th>Firma
-                                    <span onClick={() => this.handleSort("company")}>&#8711;</span>
-                                    </th>}
-                                {nip &&
-                                    <th>NIP
-                                    <span onClick={() => this.handleSort("nip")}>&#8711;</span>
-                                    </th>}
-                                {name &&
-                                    <th>Reklamujący
-                                    <span onClick={() => this.handleSort("name")}>&#8711;</span>
-                                    </th>}
-                                {nick &&
-                                    <th>Nick
-                                    <span onClick={() => this.handleSort("nick")}>&#8711;</span>
-                                    </th>}
-                                {tel &&
-                                    <th>Tel
-                                    <span onClick={() => this.handleSort("tel")}>&#8711;</span>
-                                    </th>}
-                                {mail &&
-                                    <th>Mail
-                                    <span onClick={() => this.handleSort("mail")}>&#8711;</span>
-                                    </th>}
-                                {notes &&
-                                    <th>Notatki
-                                    <span onClick={() => this.handleSort("notes")}>&#8711;</span>
-                                    </th>}
-                                {other &&
-                                    <th>Inne
-                                    <span onClick={() => this.handleSort("other")}>&#8711;</span>
-                                    </th>}
-                                {lastHistory &&
-                                    <th>Ostatnia interwencja
-                                    <span onClick={() => this.handleSort("lastHistory")}>&#8711;</span>
-                                    </th>}
+                                {thDisplay}
                             </tr>
                         </thead>
 
                         <tbody>
-                            {this.reclamations.map(recl =>
-                                <tr>
+                            {this.reclamations.length !== 0 && this.reclamations.length !== undefined ? this.reclamations.map(recl =>
+                                <tr key={recl.id}>
                                     <th><Link to={`/edit/${recl.id}`}>{recl.reclamation.number}</Link></th>
                                     {addDate && <th>{recl.reclamation.addDate}</th>}
-                                    {warranty && <th>{recl.reclamation.warranty ? "tak" : "nie"}</th>}
+                                    {warranty && <th>{recl.reclamation.warranty ?
+                                        <FontAwesomeIcon className="checked-icon" icon="check-square" />
+                                        : null}</th>}
                                     {manufacturer && <th>{recl.reclamation.manufacturer}</th>}
                                     {model && <th>{recl.reclamation.model}</th>}
                                     {problemDesc && <th>{recl.reclamation.problemDesc}</th>}
-                                    {ended && <th>{recl.reclamation.ended ? "tak" : "nie"}</th>}
+                                    {ended && <th>{recl.reclamation.ended ?
+                                        <FontAwesomeIcon className="checked-icon" icon="check-square" />
+                                        : null}</th>}
                                     {sellNumber && <th>{recl.reclamation.sellNumber}</th>}
-                                    {company && <th>{recl.client.company ? "tak" : "nie"}</th>}
+                                    {company && <th>{recl.client.company ?
+                                        <FontAwesomeIcon className="checked-icon" icon="check-square" />
+                                        : null}</th>}
                                     {nip && <th>{recl.client.nip}</th>}
                                     {name && <th>{recl.client.name}</th>}
                                     {nick && <th>{recl.client.nick}</th>}
                                     {tel && <th>{recl.client.tel}</th>}
                                     {mail && <th>{recl.client.mail}</th>}
-                                    {notes && <th>{recl.informations.notes}</th>}
-                                    {other && <th>{recl.informations.other}</th>}
+                                    {notes && <th>{recl.informations.notes ?
+                                        <FontAwesomeIcon className="checked-icon" icon="check-square" />
+                                        : null}</th>}
+                                    {other && <th>{recl.informations.other ?
+                                        <FontAwesomeIcon className="checked-icon" icon="check-square" />
+                                        : null}</th>}
                                     {lastHistory &&
                                         <th>{recl.history[recl.history.length - 1].desc}<br />
                                             {recl.history[recl.history.length - 1].date}
                                         </th>}
-
-
-                                </tr>)}
+                                </tr>) : null}
                         </tbody>
                     </table>
                 </div >
