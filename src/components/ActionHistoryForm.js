@@ -49,7 +49,7 @@ class ActionHistoryForm extends Component {
                     <label>
                         Dodaj działanie:
                         <input type="text" name="newAction" onChange={this.handleChangeAction} value={this.state.actionValue} />
-                        <button className="btn" onClick={this.handleAdd}>Dodaj</button>
+                        <button className="btn" onClick={this.handleAdd}>Dodaj (proszę pamiętać o zapisaniu)</button>
                     </label>
                 </fieldset>
             </div>

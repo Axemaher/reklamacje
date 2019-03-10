@@ -9,19 +9,34 @@ import { Link } from 'react-router-dom'
 class EditReclamation extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {}
+        this.state = {
+            reclamation: "",
+            client: "",
+            id: "",
+            informations: "",
+            history: "",
+            dataOk: false
+        }
     }
 
     componentWillMount() {
-        const id = this.props.match.params.id;
-        const edited = this.props.content.filter(el => el.id === id)[0]
-        this.setState({
-            reclamation: edited.reclamation,
-            client: edited.client,
-            id: edited.id,
-            informations: edited.informations,
-            history: edited.history,
-        })
+        const { content } = this.props;
+        if (content !== undefined && content.length !== 0) {
+            const id = this.props.match.params.id;
+            const edited = this.props.content.filter(el => el.id === id)[0]
+            this.setState({
+                reclamation: edited.reclamation,
+                client: edited.client,
+                id: edited.id,
+                informations: edited.informations,
+                history: edited.history,
+                dataOk: true
+            })
+        } else if (content === undefined) {
+            this.setState({ dataOk: false })
+        }
+        console.log(this.props.content)
+
     }
     handleSave = (e) => {
         let newData = this.state;
@@ -72,38 +87,38 @@ class EditReclamation extends React.Component {
         })
     }
     render() {
-        console.log(this.state.history)
 
         return (
             <React.Fragment>
-                <form className="form">
-                    {/* <form className="form" onSubmit={this.handleSubmit}> */}
-
-                    <ActionHistoryForm
-                        actionHistory={this.state.history}
-                        add={this.handleAddAction}
-                    />
-                    <div className="addForm">
-                        <ReclamationForm
-                            change={this.handleChangeReclamation}
-                            value={this.state.reclamation}
-                            formForEdit={true}
+                {this.state.dataOk ?
+                    <form>
+                        <ActionHistoryForm
+                            actionHistory={this.state.history}
+                            add={this.handleAddAction}
                         />
+                        <div className="addForm">
+                            <ReclamationForm
+                                change={this.handleChangeReclamation}
+                                value={this.state.reclamation}
+                                formForEdit={true}
+                            />
 
-                        <ClientForm
-                            change={this.handleChangeClient}
-                            value={this.state.client}
-                        />
+                            <ClientForm
+                                change={this.handleChangeClient}
+                                value={this.state.client}
+                            />
 
-                        <InformationsForm
-                            change={this.handleChangeInformations}
-                            value={this.state.informations}
-                        />
-                    </div>
-                    <div className="save-container">
-                        <Link className="btn btn-save" onClick={this.handleSave} to="/">Zapisz</Link>
-                    </div>
-                </form>
+                            <InformationsForm
+                                change={this.handleChangeInformations}
+                                value={this.state.informations}
+                            />
+                        </div>
+                        <div className="save-container">
+                            <Link className="btn btn-save" onClick={this.handleSave} to="/">Zapisz</Link>
+                        </div>
+                    </form>
+                    : "Wystąpił błąd, kliknij wstecz lub przejdź do listy reklamacji i spróbuj ponownie"}
+
             </React.Fragment>
         )
     }

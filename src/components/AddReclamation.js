@@ -97,7 +97,6 @@ class AddReclamation extends React.Component {
 
             // <form onSubmit={this.handleSubmit}>
             <form>
-
                 <div className="addForm">
                     <ReclamationForm
                         change={this.handleChangeReclamation}

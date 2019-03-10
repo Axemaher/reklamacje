@@ -6,7 +6,7 @@ import EditReclamation from './EditReclamation';
 import LoginForm from './LoginForm';
 import Menu from './Menu';
 import { fbase } from '../fbase';
-import '../index.css'
+import '../index.scss'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faAt, faLock, faSpinner, faFileSignature, faList, faCog, faSignOutAlt, faSort, faCheckSquare } from '@fortawesome/free-solid-svg-icons'
 library.add(faAt, faLock, faSpinner, faFileSignature, faList, faCog, faSignOutAlt, faSort, faCheckSquare)
@@ -36,7 +36,6 @@ class App extends Component {
         this.setState({
             content: stateCopy.content
         })
-
     }
     loginSuccess = () => {
         this.setState({
