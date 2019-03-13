@@ -8,8 +8,8 @@ import Menu from './Menu';
 import { fbase } from '../fbase';
 import '../index.scss'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faAt, faLock, faSpinner, faFileSignature, faList, faCog, faSignOutAlt, faSort, faCheckSquare } from '@fortawesome/free-solid-svg-icons'
-library.add(faAt, faLock, faSpinner, faFileSignature, faList, faCog, faSignOutAlt, faSort, faCheckSquare)
+import { faAt, faLock, faSpinner, faFileSignature, faList, faCog, faSignOutAlt, faSort, faCheckSquare, faTimes } from '@fortawesome/free-solid-svg-icons'
+library.add(faAt, faLock, faSpinner, faFileSignature, faList, faCog, faSignOutAlt, faSort, faCheckSquare, faTimes)
 
 
 class App extends Component {

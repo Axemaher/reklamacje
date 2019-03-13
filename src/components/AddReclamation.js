@@ -4,7 +4,8 @@ import { CurrentDate } from './CurrentDate'
 import InformationsForm from './InformationsForm';
 import ClientForm from './ClientForm';
 import ReclamationForm from './ReclamationForm';
-import { Link } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
+
 
 
 class AddReclamation extends React.Component {
@@ -32,10 +33,12 @@ class AddReclamation extends React.Component {
             other: ""
         },
         history: [],
-        id: ""
+        id: "",
+        redirect: false
     }
 
     handleSave = (e) => {
+        const now = new Date();
         let stateCopy = this.state;
         let reclamationNumber = null
         if (isNaN(this.props.reclamationCounter)) {
@@ -44,7 +47,11 @@ class AddReclamation extends React.Component {
             reclamationNumber = this.props.reclamationCounter + 1;
         }
         stateCopy.reclamation.number = `RK ${reclamationNumber}/${CurrentDate("year")}`;
-        stateCopy.reclamation.addDate = CurrentDate("full date");
+        stateCopy.reclamation.addDate = {
+            stringFormat: CurrentDate("full date"),
+            dateTime: now.getTime()
+        };
+        console.log(now)
         stateCopy.history.push(
             {
                 desc: "Wprowadzono do systemu",
@@ -52,6 +59,7 @@ class AddReclamation extends React.Component {
             });
         stateCopy.id = uuid.v4();
         this.props.handleAdd(stateCopy)
+        this.setState({ redirect: true })
     }
     handleChangeReclamation = (e) => {
         if (e.target.name === "warranty") {
@@ -94,32 +102,32 @@ class AddReclamation extends React.Component {
     }
     render() {
         return (
+            <>
+                <form onSubmit={this.handleSave}>
+                    <div className="addForm">
+                        <ReclamationForm
+                            change={this.handleChangeReclamation}
+                            value={this.state.reclamation}
+                            handleChangeReclamation={this.handleChangeReclamation}
+                            formForEdit={false}
+                        />
 
-            // <form onSubmit={this.handleSubmit}>
-            <form>
-                <div className="addForm">
-                    <ReclamationForm
-                        change={this.handleChangeReclamation}
-                        value={this.state.reclamation}
-                        formForEdit={false}
-                    />
+                        <ClientForm
+                            change={this.handleChangeClient}
+                            value={this.state.client}
+                        />
 
-                    <ClientForm
-                        change={this.handleChangeClient}
-                        value={this.state.client}
-                    />
-
-                    <InformationsForm
-                        change={this.handleChangeInformations}
-                        value={this.state.informations}
-                    />
-                </div>
-                <div className="save-container">
-                    <Link className="btn btn-save" onClick={this.handleSave} to="/">Dodaj</Link>
-                </div>
-                {/* <button className="btn btn-save" type="submit" >Dodaj</button></div> */}
-            </form>
-
+                        <InformationsForm
+                            change={this.handleChangeInformations}
+                            value={this.state.informations}
+                        />
+                    </div>
+                    <div className="save-container">
+                        <button type="submit" className="btn btn-save">Dodaj</button>
+                    </div>
+                </form>
+                {this.state.redirect && <Redirect to='/' />}
+            </>
         )
     }
 }

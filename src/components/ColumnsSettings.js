@@ -5,7 +5,24 @@ class ColumnsSettings extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            columnsToShow: {}
+            columnsToShow: {
+                addDate: false,
+                warranty: false,
+                manufacturer: false,
+                model: false,
+                problemDesc: false,
+                ended: false,
+                sellNumber: false,
+                company: false,
+                nip: false,
+                name: false,
+                nick: false,
+                tel: false,
+                mail: false,
+                notes: false,
+                other: false,
+                lastHistory: false
+            }
         }
     }
     handleChange = (e) => {

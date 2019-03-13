@@ -109,6 +109,12 @@ class ReclamationsList extends React.Component {
             [e.target.name]: e.target.checked
         })
     }
+    daysLeft = start => {
+        let now = new Date();
+        now = now.getTime();
+        console.log(start)
+        return parseInt((now - start) / (24 * 3600 * 1000));
+    }
     componentDidMount() {
         if (localStorage.getItem('columns') === null) {
             return
@@ -169,6 +175,10 @@ class ReclamationsList extends React.Component {
                 {data.sort && <span onClick={() => this.handleSort(data.sort)}><FontAwesomeIcon className="sort-icon" icon="sort" /></span>}
             </th>
         ))
+
+
+
+
         return (
             <div>
                 <div className="filters">
@@ -188,6 +198,9 @@ class ReclamationsList extends React.Component {
                         </label>
                     </div>
                 </div>
+
+
+
                 {this.reclamations.length !== 0 && this.reclamations.length !== undefined ?
                     <div className="reclamation-list" >
                         <table className="table">
@@ -198,39 +211,42 @@ class ReclamationsList extends React.Component {
                             </thead>
 
                             <tbody>
-                                {this.reclamations.map(recl =>
-                                    <tr key={recl.id}>
-                                        <th><Link to={`/edit/${recl.id}`}>{recl.reclamation.number}</Link></th>
-                                        {addDate && <th>{recl.reclamation.addDate}</th>}
-                                        {warranty && <th>{recl.reclamation.warranty ?
-                                            <FontAwesomeIcon className="checked-icon" icon="check-square" />
-                                            : null}</th>}
-                                        {manufacturer && <th>{recl.reclamation.manufacturer}</th>}
-                                        {model && <th>{recl.reclamation.model}</th>}
-                                        {problemDesc && <th>{recl.reclamation.problemDesc}</th>}
-                                        {ended && <th>{recl.reclamation.ended ?
-                                            <FontAwesomeIcon className="checked-icon" icon="check-square" />
-                                            : null}</th>}
-                                        {sellNumber && <th>{recl.reclamation.sellNumber}</th>}
-                                        {company && <th>{recl.client.company ?
-                                            <FontAwesomeIcon className="checked-icon" icon="check-square" />
-                                            : null}</th>}
-                                        {nip && <th>{recl.client.nip}</th>}
-                                        {name && <th>{recl.client.name}</th>}
-                                        {nick && <th>{recl.client.nick}</th>}
-                                        {tel && <th>{recl.client.tel}</th>}
-                                        {mail && <th>{recl.client.mail}</th>}
-                                        {notes && <th>{recl.informations.notes ?
-                                            <FontAwesomeIcon className="checked-icon" icon="check-square" />
-                                            : null}</th>}
-                                        {other && <th>{recl.informations.other ?
-                                            <FontAwesomeIcon className="checked-icon" icon="check-square" />
-                                            : null}</th>}
-                                        {lastHistory &&
-                                            <th>{recl.history[recl.history.length - 1].desc}<br />
-                                                {recl.history[recl.history.length - 1].date}
-                                            </th>}
-                                    </tr>)}
+                                {this.reclamations.map(recl => {
+                                    return (
+                                        <tr key={recl.id}>
+                                            <th><Link to={`/edit/${recl.id}`}>{recl.reclamation.number}</Link> ({this.daysLeft(recl.reclamation.addDate.dateTime)})</th>
+                                            {addDate && <th>{recl.reclamation.addDate.stringFormat}</th>}
+                                            {warranty && <th>{recl.reclamation.warranty ?
+                                                <FontAwesomeIcon className="checked-icon" icon="check-square" />
+                                                : null}</th>}
+                                            {manufacturer && <th>{recl.reclamation.manufacturer}</th>}
+                                            {model && <th>{recl.reclamation.model}</th>}
+                                            {problemDesc && <th>{recl.reclamation.problemDesc}</th>}
+                                            {ended && <th>{recl.reclamation.ended ?
+                                                <FontAwesomeIcon className="checked-icon" icon="check-square" />
+                                                : null}</th>}
+                                            {sellNumber && <th>{recl.reclamation.sellNumber}</th>}
+                                            {company && <th>{recl.client.company ?
+                                                <FontAwesomeIcon className="checked-icon" icon="check-square" />
+                                                : null}</th>}
+                                            {nip && <th>{recl.client.nip}</th>}
+                                            {name && <th>{recl.client.name}</th>}
+                                            {nick && <th>{recl.client.nick}</th>}
+                                            {tel && <th>{recl.client.tel}</th>}
+                                            {mail && <th>{recl.client.mail}</th>}
+                                            {notes && <th>{recl.informations.notes ?
+                                                <FontAwesomeIcon className="checked-icon" icon="check-square" />
+                                                : null}</th>}
+                                            {other && <th>{recl.informations.other ?
+                                                <FontAwesomeIcon className="checked-icon" icon="check-square" />
+                                                : null}</th>}
+                                            {lastHistory &&
+                                                <th>{recl.history[recl.history.length - 1].date}<br />
+                                                    {recl.history[recl.history.length - 1].desc}
+                                                </th>}
+                                        </tr>
+                                    )
+                                })}
                             </tbody>
                         </table>
                     </div > : <Loading />

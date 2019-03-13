@@ -5,7 +5,8 @@ class ActionHistoryForm extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            actionValue: ""
+            actionValue: "",
+            valueOk: " "
         }
     }
     handleChangeAction = (e) => {
@@ -15,12 +16,18 @@ class ActionHistoryForm extends Component {
     }
     handleAdd = (e) => {
         e.preventDefault()
-        const newAction = {
-            desc: this.state.actionValue,
-            date: CurrentDate("full date")
+        if (this.state.actionValue.length <= 3) {
+            this.setState({ valueOk: false })
+        } else {
+            this.setState({ valueOk: true })
+            const newAction = {
+                desc: this.state.actionValue,
+                date: CurrentDate("full date")
+            }
+            this.setState({ actionValue: "" })
+            this.props.add(newAction)
         }
-        this.setState({ actionValue: "" })
-        this.props.add(newAction)
+
     }
     render() {
         const historyTable = this.props.actionHistory.map((action, index) =>
@@ -46,11 +53,14 @@ class ActionHistoryForm extends Component {
                         </tbody>
                     </table>
 
-                    <label>
+                    <div>
                         Dodaj działanie:
-                        <input type="text" name="newAction" onChange={this.handleChangeAction} value={this.state.actionValue} />
+                        <span className="label-with-error">
+                            <input type="text" name="newAction" onChange={this.handleChangeAction} value={this.state.actionValue} />
+                            {this.state.valueOk ? "" : <span>wymagane przynajmniej 3 znaki</span>}
+                        </span>
                         <button className="btn" onClick={this.handleAdd}>Dodaj (proszę pamiętać o zapisaniu)</button>
-                    </label>
+                    </div>
                 </fieldset>
             </div>
         );

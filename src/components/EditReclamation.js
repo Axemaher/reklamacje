@@ -3,7 +3,7 @@ import ActionHistoryForm from './ActionHistoryForm';
 import InformationsForm from './InformationsForm';
 import ClientForm from './ClientForm';
 import ReclamationForm from './ReclamationForm';
-import { Link } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 
 
 class EditReclamation extends React.Component {
@@ -15,7 +15,8 @@ class EditReclamation extends React.Component {
             id: "",
             informations: "",
             history: "",
-            dataOk: false
+            dataOk: false,
+            redirect: false
         }
     }
 
@@ -35,12 +36,12 @@ class EditReclamation extends React.Component {
         } else if (content === undefined) {
             this.setState({ dataOk: false })
         }
-        console.log(this.props.content)
 
     }
     handleSave = (e) => {
         let newData = this.state;
         this.props.handleEdit(newData)
+        this.setState({ redirect: true })
     }
     handleChangeReclamation = (e) => {
         if (e.target.name === "warranty" || e.target.name === "ended") {
@@ -91,7 +92,7 @@ class EditReclamation extends React.Component {
         return (
             <React.Fragment>
                 {this.state.dataOk ?
-                    <form>
+                    <form onSubmit={this.handleSave}>
                         <ActionHistoryForm
                             actionHistory={this.state.history}
                             add={this.handleAddAction}
@@ -114,10 +115,12 @@ class EditReclamation extends React.Component {
                             />
                         </div>
                         <div className="save-container">
-                            <Link className="btn btn-save" onClick={this.handleSave} to="/">Zapisz</Link>
+                            <button type="submit" className="btn btn-save">Zapisz</button>
                         </div>
                     </form>
                     : "Wystąpił błąd, kliknij wstecz lub przejdź do listy reklamacji i spróbuj ponownie"}
+
+                {this.state.redirect && <Redirect to='/' />}
 
             </React.Fragment>
         )
