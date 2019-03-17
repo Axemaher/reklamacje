@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import ActionHistoryForm from './ActionHistoryForm';
 import InformationsForm from './InformationsForm';
 import ClientForm from './ClientForm';
@@ -6,7 +6,7 @@ import ReclamationForm from './ReclamationForm';
 import { Redirect } from 'react-router-dom'
 
 
-class EditReclamation extends React.Component {
+class EditReclamation extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -15,7 +15,7 @@ class EditReclamation extends React.Component {
             id: "",
             informations: "",
             history: "",
-            dataOk: false,
+            correctData: false,
             redirect: false
         }
     }
@@ -31,19 +31,21 @@ class EditReclamation extends React.Component {
                 id: edited.id,
                 informations: edited.informations,
                 history: edited.history,
-                dataOk: true
+                correctData: true
             })
         } else if (content === undefined) {
-            this.setState({ dataOk: false })
+            this.setState({ correctData: false })
         }
 
     }
-    handleSave = (e) => {
+    handleSave = () => {
         let newData = this.state;
+        delete newData.correctData;
+        delete newData.redirect;
         this.props.handleEdit(newData)
         this.setState({ redirect: true })
     }
-    handleChangeReclamation = (e) => {
+    handleChangeReclamation = e => {
         if (e.target.name === "warranty" || e.target.name === "ended") {
             this.setState({
                 reclamation: {
@@ -59,7 +61,7 @@ class EditReclamation extends React.Component {
         }
     }
 
-    handleChangeClient = (e) => {
+    handleChangeClient = e => {
         if (e.target.name === "company") {
             this.setState({
                 client: {
@@ -75,14 +77,14 @@ class EditReclamation extends React.Component {
         }
     }
 
-    handleChangeInformations = (e) => {
+    handleChangeInformations = e => {
         this.setState({
             informations: {
                 ...this.state.informations, [e.target.name]: e.target.value
             }
         })
     }
-    handleAddAction = (newAction) => {
+    handleAddAction = newAction => {
         this.setState({
             history: [...this.state.history, newAction]
         })
@@ -91,7 +93,7 @@ class EditReclamation extends React.Component {
 
         return (
             <React.Fragment>
-                {this.state.dataOk ?
+                {this.state.correctData ?
                     <form onSubmit={this.handleSave}>
                         <ActionHistoryForm
                             actionHistory={this.state.history}

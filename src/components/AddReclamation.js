@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import uuid from 'uuid';
 import { CurrentDate } from './CurrentDate'
 import InformationsForm from './InformationsForm';
@@ -8,38 +8,42 @@ import { Redirect } from 'react-router-dom'
 
 
 
-class AddReclamation extends React.Component {
-    state = {
-        reclamation: {
-            number: "",
-            addDate: "",
-            warranty: true,
-            manufacturer: "",
-            model: "",
-            problemDesc: "",
-            ended: false,
-            sellNumber: ""
-        },
-        client: {
-            company: false,
-            nip: "",
-            name: "",
-            nick: "",
-            tel: "",
-            mail: ""
-        },
-        informations: {
-            note: "",
-            other: ""
-        },
-        history: [],
-        id: "",
-        redirect: false
+class AddReclamation extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            reclamation: {
+                number: "",
+                addDate: "",
+                warranty: true,
+                manufacturer: "",
+                model: "",
+                problemDesc: "",
+                ended: false,
+                sellNumber: ""
+            },
+            client: {
+                company: false,
+                nip: "",
+                name: "",
+                nick: "",
+                tel: "",
+                mail: ""
+            },
+            informations: {
+                note: "",
+                other: ""
+            },
+            history: [],
+            id: "",
+            redirect: false
+        }
     }
 
-    handleSave = (e) => {
+    handleSave = () => {
         const now = new Date();
         let stateCopy = this.state;
+        delete stateCopy.redirect;
         let reclamationNumber = null
         if (isNaN(this.props.reclamationCounter)) {
             reclamationNumber = 1;
@@ -51,7 +55,6 @@ class AddReclamation extends React.Component {
             stringFormat: CurrentDate("full date"),
             dateTime: now.getTime()
         };
-        console.log(now)
         stateCopy.history.push(
             {
                 desc: "Wprowadzono do systemu",
@@ -61,8 +64,8 @@ class AddReclamation extends React.Component {
         this.props.handleAdd(stateCopy)
         this.setState({ redirect: true })
     }
-    handleChangeReclamation = (e) => {
-        if (e.target.name === "warranty") {
+    handleChangeReclamation = e => {
+        if (e.target.type === "checkbox") {
             this.setState({
                 reclamation: {
                     ...this.state.reclamation, [e.target.name]: e.target.checked
@@ -77,8 +80,8 @@ class AddReclamation extends React.Component {
         }
     }
 
-    handleChangeClient = (e) => {
-        if (e.target.name === "company") {
+    handleChangeClient = e => {
+        if (e.target.type === "checkbox") {
             this.setState({
                 client: {
                     ...this.state.client, [e.target.name]: e.target.checked
@@ -93,7 +96,7 @@ class AddReclamation extends React.Component {
         }
     }
 
-    handleChangeInformations = (e) => {
+    handleChangeInformations = e => {
         this.setState({
             informations: {
                 ...this.state.informations, [e.target.name]: e.target.value

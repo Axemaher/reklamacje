@@ -6,7 +6,7 @@ export function CurrentDate(dataFormat) {
     month = month < 9 ? `0${month}` : month;
     const year = currentDate.getFullYear();
     if (dataFormat === "full date") {
-        return `${day}.${month}.${year}`;
+        return `${day}-${month}-${year}`;
     } else if (dataFormat === "year") {
         return `${year}`
     }

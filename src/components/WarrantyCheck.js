@@ -6,7 +6,8 @@ class WarrantyCheck extends React.Component {
     state = {
         warrantyTime: "12msc",
         warrantyStartDate: "",
-        daysToEndWarranty: ""
+        daysToEndWarranty: "",
+        correctValue: true
     }
 
 
@@ -30,6 +31,7 @@ class WarrantyCheck extends React.Component {
             case "36msc":
                 warrantyYears = 3;
                 break;
+            default: return;
         }
         let startWarranty = stateCopy.warrantyStartDate;
         startWarranty = new Date(startWarranty);
@@ -46,20 +48,22 @@ class WarrantyCheck extends React.Component {
         if (!isNaN(startWarranty)) {
             stateCopy.daysToEndWarranty = parseInt((endWarranty - today) / (24 * 3600 * 1000));
             this.setState({
-                daysToEndWarranty: stateCopy.daysToEndWarranty
+                daysToEndWarranty: stateCopy.daysToEndWarranty,
+                correctValue: true
             })
-
+        } else {
+            this.setState({ correctValue: false })
         }
-
     }
     render() {
+        const { warrantyTime, daysToEndWarranty, correctValue } = this.state;
         return (
             <div className="modal">
                 <div className="modal-content warranty-check">
-                    <form onSubmit={this.handleSubmit.bind(this)}>
+                    <div >
                         <label>
                             Czas trwania gwarancji:
-                            <select name="warrantyTime" value={this.state.warrantyTime} onChange={this.handleChange.bind(this)}>
+                            <select name="warrantyTime" value={warrantyTime} onChange={this.handleChange}>
                                 <option value="12msc">12 miesięcy</option>
                                 <option value="24msc">24 miesiące</option>
                                 <option value="36msc">36 miesięcy</option>
@@ -67,16 +71,22 @@ class WarrantyCheck extends React.Component {
                         </label>
                         <label>
                             Data zakupu:
-                            <input type="date" name="warrantyStartDate" required onChange={this.handleChange.bind(this)} />
+                            <span className="label-with-error">
+                                <input type="date" name="warrantyStartDate" required onChange={this.handleChange} />
+                                {correctValue ? "" : <span>proszę podać poprawną datę zakupu</span>}
+                            </span>
+
                         </label>
+
                         Status:
                         {this.state.daysToEndWarranty === "" ?
                             "" :
-                            <span>{this.state.daysToEndWarranty <= 0 ? ` zakończony` : ` pozostało ${this.state.daysToEndWarranty} dni`}</span>}
-                        <button className="btn" type="submit" >sprawdź</button>
-                    </form>
-
-                    <button className="btn btn-x" onClick={this.props.handleWarrantyCheck}><FontAwesomeIcon className="faIcon" icon="times" /></button>
+                            <span>{daysToEndWarranty <= 0 ? ` zakończony` : ` pozostało ${daysToEndWarranty} dni`}</span>}
+                        <button className="btn" type="submit" onClick={this.handleSubmit}>sprawdź</button>
+                    </div>
+                    <button className="btn btn-x" onClick={this.props.handleWarrantyCheck}>
+                        <FontAwesomeIcon className="faIcon" icon="times" />
+                    </button>
                 </div>
             </div >
         )

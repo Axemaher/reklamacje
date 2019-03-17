@@ -21,7 +21,7 @@ class App extends Component {
             settings: false
         }
     }
-    add = (newData) => {
+    add = newData => {
         if (Array.isArray(this.state.content)) {
             this.setState({ content: [...this.state.content, newData] })
         } else {
@@ -29,7 +29,7 @@ class App extends Component {
         }
 
     }
-    edit = (data) => {
+    edit = data => {
         const index = this.state.content.findIndex(el => el.id === data.id)
         const stateCopy = this.state;
         stateCopy.content[index] = data;

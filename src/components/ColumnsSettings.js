@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
 
-class ColumnsSettings extends React.Component {
+class ColumnsSettings extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -25,7 +25,7 @@ class ColumnsSettings extends React.Component {
             }
         }
     }
-    handleChange = (e) => {
+    handleChange = e => {
         this.setState({
             columnsToShow: {
                 ...this.state.columnsToShow, [e.target.name]: e.target.checked

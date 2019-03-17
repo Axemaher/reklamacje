@@ -27,7 +27,7 @@ $s1000: 1000px;
 		max-width: 1600px;
 		margin: 0 auto;
 		@media screen and (max-width: $s800) {
-			padding: 5px;
+			padding: 0;
 		}
 	}
 
@@ -165,7 +165,7 @@ $s1000: 1000px;
 
 	.btn {
 		text-decoration: none;
-		margin: 20px 10px 20px;
+		margin: 12px 10px 12px;
 		width: auto;
 		padding:0 30px;
 		height: 40px;
@@ -193,6 +193,10 @@ $s1000: 1000px;
 		align-items: center;
 		justify-content: space-between;
 		border-bottom: 4px solid #0d8ccc;
+		position: sticky;
+		top: 0;
+		z-index: 1;
+		background-color: #fff;
 		ul {
 			display: flex;
 			li{
@@ -314,19 +318,20 @@ $s1000: 1000px;
 		}
 		label {
 			display: block;
+			font-size: 0.9em;
 			// padding-bottom: 10px;
 		}
 		p {
 			display: flex;
 			justify-content: space-between;
 			margin-bottom: 4px;
-			font-size: 1.2em;
+			font-size: 1em;
 			padding-bottom: 10px;		
 		}
 		input, textarea, select {
 			display: block;
 			padding: 4px;
-			font-size: 1.2em;
+			font-size: 1em;
 			width: 100%;
 			margin-bottom: 4px;
 			border-radius: 3px;
@@ -336,7 +341,7 @@ $s1000: 1000px;
 			min-height: 100px;
 		}
 		legend {
-			font-size: 2.5em;
+			font-size: 1.4em;
 			font-weight: bold;
 			color: #0d8ccc;
 		}
@@ -344,10 +349,13 @@ $s1000: 1000px;
 	.warranty-check{
 		min-width: 360px;
 		position: relative;
-		form{
+		div{
 			margin-top: 10px;
 			label{
 				margin-bottom: 14px;
+			}
+			label:nth-child(2){
+				padding-bottom: 10px;
 			}
 		}
 		.btn{
@@ -436,7 +444,10 @@ $s1000: 1000px;
 	border-top: 1px solid #dee2e6;
 	}
 	th:nth-child(1){
-		min-width: 80px;
+		min-width: 99px;
+	}
+	th:nth-child(2){
+		min-width: 84px;
 	}
   tbody{
 	th {
@@ -466,6 +477,10 @@ $s1000: 1000px;
 	padding-top: 3px;
 	display: flex;
 	align-items: center;
+	position: sticky;
+	top: 68px;
+	background-color: #fff;
+	z-index: 0;
 	.filter-checkbox{
 		position: relative;
 		margin-left: 40px;

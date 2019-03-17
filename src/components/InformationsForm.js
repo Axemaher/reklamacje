@@ -1,5 +1,5 @@
 import React from 'react';
-const InformationsForm = (props) => {
+const InformationsForm = props => {
     return (
         <div className="form-fieldset informations-form">
             <fieldset name="informations">

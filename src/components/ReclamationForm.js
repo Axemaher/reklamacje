@@ -1,23 +1,24 @@
-import React from 'react';
+import React, { Component } from 'react';
 import WarrantyCheck from './WarrantyCheck'
-class ReclamationForm extends React.Component {
+class ReclamationForm extends Component {
     state = {
         warrantyModal: false,
     }
     handleWarrantyCheck = () => {
-
         this.setState({ warrantyModal: !this.state.warrantyModal })
     }
     render() {
+        const { number, addDate, ended, warranty, manufacturer, model, problemDesc, sellNumber } = this.props.value;
+        const { formForEdit, change, handleChangeReclamation } = this.props;
         return (
             <>
                 <div className="form-fieldset reclamation-form">
                     <fieldset name="reclamation">
                         <legend>Reklamacja</legend>
-                        {this.props.formForEdit &&
+                        {formForEdit &&
                             <>
-                                <p>Numer: <span>{this.props.value.number}</span></p>
-                                <p>Data rozpoczęcia: <span>{this.props.value.addDate.stringFormat}</span></p>
+                                <p>Numer: <span>{number}</span></p>
+                                <p>Data rozpoczęcia: <span>{addDate.stringFormat}</span></p>
                                 <div>
                                     <label htmlFor="ended" className="control control--checkbox">
                                         Zakończono
@@ -25,8 +26,8 @@ class ReclamationForm extends React.Component {
                                             type="checkbox"
                                             id="ended"
                                             name="ended"
-                                            onChange={this.props.change}
-                                            checked={this.props.value.ended}
+                                            onChange={change}
+                                            checked={ended}
                                         />
                                         <div className="control__indicator"></div>
                                     </label>
@@ -39,8 +40,8 @@ class ReclamationForm extends React.Component {
                                     type="checkbox"
                                     id="warranty"
                                     name="warranty"
-                                    onChange={this.props.change}
-                                    checked={this.props.value.warranty}
+                                    onChange={change}
+                                    checked={warranty}
                                 />
                                 <div className="control__indicator"></div>
                             </label>
@@ -53,8 +54,8 @@ class ReclamationForm extends React.Component {
                         <input
                                 type="text"
                                 name="manufacturer"
-                                onChange={this.props.change}
-                                value={this.props.value.manufacturer}
+                                onChange={change}
+                                value={manufacturer}
                             />
                         </label>
                         <label>
@@ -62,8 +63,8 @@ class ReclamationForm extends React.Component {
                         <input
                                 type="text"
                                 name="model"
-                                onChange={this.props.change}
-                                value={this.props.value.model}
+                                onChange={change}
+                                value={model}
                             />
                         </label>
                         <label>
@@ -71,8 +72,8 @@ class ReclamationForm extends React.Component {
                         <textarea
                                 type="text"
                                 name="problemDesc"
-                                onChange={this.props.change}
-                                value={this.props.value.problemDesc}
+                                onChange={change}
+                                value={problemDesc}
                                 required
                             />
                         </label>
@@ -81,14 +82,14 @@ class ReclamationForm extends React.Component {
                         <input
                                 type="text"
                                 name="sellNumber"
-                                onChange={this.props.change}
-                                value={this.props.value.sellNumber}
+                                onChange={change}
+                                value={sellNumber}
                             />
                         </label>
                     </fieldset>
                 </div>
                 {this.state.warrantyModal && <WarrantyCheck handleWarrantyCheck={this.handleWarrantyCheck}
-                    handleChangeReclamation={this.props.handleChangeReclamation} />}
+                    handleChangeReclamation={handleChangeReclamation} />}
             </>
         )
     }

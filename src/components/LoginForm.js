@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { firebaseApp } from '../fbase';
 
 
-class LoginForm extends React.Component {
+class LoginForm extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -48,6 +48,7 @@ class LoginForm extends React.Component {
             })
     }
     render() {
+        // let loginButtonContent
         let loginButton = null;
         if (this.state.correctLoginData) {
             loginButton = <button className="login-btn" type="submit">DANE POPRAWNE <span className="loading"><FontAwesomeIcon icon="spinner" /></span></button>
@@ -66,7 +67,7 @@ class LoginForm extends React.Component {
                                 <FontAwesomeIcon icon="at" />
                             </span>
                             <input
-                                type="text"
+                                type="email"
                                 placeholder="Email"
                                 name="email"
                                 value={this.state.email}
@@ -77,7 +78,7 @@ class LoginForm extends React.Component {
                                 <FontAwesomeIcon icon="lock" />
                             </span>
                             <input
-                                type="text"
+                                type="password"
                                 placeholder="Hasło"
                                 name="password"
                                 value={this.state.password}

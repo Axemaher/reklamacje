@@ -23,7 +23,7 @@ const ClientForm = (props) => {
 
 
                 {props.value.company ?
-                    <React.Fragment>
+                    <>
                         <label>
                             NIP:
                             <input
@@ -33,7 +33,7 @@ const ClientForm = (props) => {
                                 value={props.value.nip}
                             />
                         </label>
-                    </React.Fragment>
+                    </>
                     : null
                 }
                 <label>

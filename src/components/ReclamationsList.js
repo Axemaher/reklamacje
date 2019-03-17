@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Loading from './Loading';
 
 
-class ReclamationsList extends React.Component {
+class ReclamationsList extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -12,7 +12,7 @@ class ReclamationsList extends React.Component {
             updated: false,
             sorting: "sorted",
             filterValue: "",
-            notEndedOnly: false
+            notEndedOnly: true
         }
         this.reclamations = null
     }
@@ -24,8 +24,8 @@ class ReclamationsList extends React.Component {
             let x, y;
             switch (dataSort) {
                 case "date":
-                    x = a.reclamation.addDate;
-                    y = b.reclamation.addDate;
+                    x = a.reclamation.addDate.stringFormat;
+                    y = b.reclamation.addDate.stringFormat;
                     break;
 
                 case "warranty":
@@ -59,8 +59,8 @@ class ReclamationsList extends React.Component {
                     y = b.client.company;
                     break;
                 case "nip":
-                    x = a.client.nip.toLowerCase();
-                    y = b.client.nip.toLowerCase();
+                    x = a.client.nip;
+                    y = b.client.nip;
                     break;
                 case "name":
                     x = a.client.name.toLowerCase();
@@ -79,12 +79,12 @@ class ReclamationsList extends React.Component {
                     y = b.client.mail.toLowerCase();
                     break;
                 case "notes":
-                    x = a.informations.note.toLowerCase();
-                    y = b.informations.note.toLowerCase();
+                    x = a.informations.note;
+                    y = b.informations.note;
                     break;
                 case "other":
-                    x = a.informations.other.toLowerCase();
-                    y = b.informations.other.toLowerCase();
+                    x = a.informations.other;
+                    y = b.informations.other;
                     break;
                 default: return null
             }
@@ -109,33 +109,35 @@ class ReclamationsList extends React.Component {
             [e.target.name]: e.target.checked
         })
     }
-    daysLeft = start => {
-        let now = new Date();
-        now = now.getTime();
-        console.log(start)
-        return parseInt((now - start) / (24 * 3600 * 1000));
-    }
+    // daysLeft = start => {
+    //     let now = new Date();
+    //     now = now.getTime();
+    //     return parseInt((now - start) / (1000 * 60 * 60 * 24));
+    // }
     componentDidMount() {
-        if (localStorage.getItem('columns') === null) {
-            return
-        }
-        this.setState({ columnsToShow: JSON.parse(localStorage.getItem('columns')) })
+        this.columnsUpdating();
     }
     componentWillReceiveProps() {
+        this.columnsUpdating();
+    }
+    columnsUpdating = () => {
         if (localStorage.getItem('columns') === null) {
             return
         }
         this.setState({ columnsToShow: JSON.parse(localStorage.getItem('columns')) })
     }
     render() {
-        if (this.state.updated === false) {
+        const { updated, notEndedOnly, filterValue } = this.state;
+        if (updated === false) {
             this.reclamations = this.props.content;
         }
 
+
+        // console.log(this.reclamations)
         const { addDate, warranty, manufacturer, model, problemDesc, ended, sellNumber, company, nip, name, nick, tel, mail, notes, other, lastHistory } = this.state.columnsToShow;
         const thData = [
             { sort: false, label: "Numer", visible: true },
-            { sort: "addDate", label: "Data dodania", visible: addDate },
+            { sort: "date", label: "Data dodania", visible: addDate },
             { sort: "warranty", label: "GW", visible: warranty },
             { sort: "manufacturer", label: "Producent", visible: manufacturer },
             { sort: "model", label: "Model", visible: model },
@@ -152,23 +154,25 @@ class ReclamationsList extends React.Component {
             { sort: "other", label: "Inne", visible: other },
             { sort: false, label: "Ostatnia interwencja", visible: lastHistory },
         ];
-        console.log(this.state.filterValue)
-        if (this.state.notEndedOnly) {
-            this.reclamations = this.reclamations.filter(reclamation => !reclamation.reclamation.ended)
+
+
+
+        if (this.reclamations.length !== 0 && this.reclamations.length !== undefined) {
+            if (notEndedOnly) {
+                this.reclamations = this.reclamations.filter(recl => !recl.reclamation.ended)
+            }
+            this.reclamations = this.reclamations.filter(recl => {
+                const { mail, name, nick, nip, tel } = recl.client;
+                const { filterValue } = this.state;
+                return mail.toLowerCase().includes(filterValue) ||
+                    name.toLowerCase().includes(filterValue) ||
+                    nick.toLowerCase().includes(filterValue) ||
+                    nip.includes(filterValue) ||
+                    tel.includes(filterValue)
+            })
         }
 
-        this.reclamations = this.reclamations.filter(reclamation => {
-            const { mail, name, nick, nip, tel } = reclamation.client;
-            const { filterValue } = this.state;
-            return mail.toLowerCase().includes(filterValue) ||
-                name.toLowerCase().includes(filterValue) ||
-                nick.toLowerCase().includes(filterValue) ||
-                nip.includes(filterValue) ||
-                tel.includes(filterValue)
-        })
 
-
-        console.log(this.reclamations)
         const thDisplay = thData.map((data, index) => (
             data.visible &&
             <th key={index}>{data.label}
@@ -183,7 +187,7 @@ class ReclamationsList extends React.Component {
             <div>
                 <div className="filters">
                     <label htmlFor="filterValue">Szukaj</label>
-                    <input type="text" name="filterValue" onChange={this.handleFilter} value={this.state.filterValue} />
+                    <input type="text" name="filterValue" onChange={this.handleFilter} value={filterValue} />
                     <div className="filter-checkbox">
                         <label htmlFor="notEndedOnly" className="control control--checkbox">
                             Tylko niezakończone
@@ -192,7 +196,7 @@ class ReclamationsList extends React.Component {
                                 id="notEndedOnly"
                                 name="notEndedOnly"
                                 onChange={this.handleNotEndedOnly}
-                                checked={this.state.notEndedOnly}
+                                checked={notEndedOnly}
                             />
                             <div className="control__indicator"></div>
                         </label>
@@ -214,7 +218,9 @@ class ReclamationsList extends React.Component {
                                 {this.reclamations.map(recl => {
                                     return (
                                         <tr key={recl.id}>
-                                            <th><Link to={`/edit/${recl.id}`}>{recl.reclamation.number}</Link> ({this.daysLeft(recl.reclamation.addDate.dateTime)})</th>
+                                            <th><Link to={`/edit/${recl.id}`}>{recl.reclamation.number}</Link>
+                                                {/* ({this.daysLeft(recl.reclamation.addDate.dateTime)}) */}
+                                            </th>
                                             {addDate && <th>{recl.reclamation.addDate.stringFormat}</th>}
                                             {warranty && <th>{recl.reclamation.warranty ?
                                                 <FontAwesomeIcon className="checked-icon" icon="check-square" />
@@ -234,10 +240,10 @@ class ReclamationsList extends React.Component {
                                             {nick && <th>{recl.client.nick}</th>}
                                             {tel && <th>{recl.client.tel}</th>}
                                             {mail && <th>{recl.client.mail}</th>}
-                                            {notes && <th>{recl.informations.notes ?
+                                            {notes && <th>{recl.informations.note !== "" ?
                                                 <FontAwesomeIcon className="checked-icon" icon="check-square" />
                                                 : null}</th>}
-                                            {other && <th>{recl.informations.other ?
+                                            {other && <th>{recl.informations.other !== "" ?
                                                 <FontAwesomeIcon className="checked-icon" icon="check-square" />
                                                 : null}</th>}
                                             {lastHistory &&
@@ -251,8 +257,6 @@ class ReclamationsList extends React.Component {
                         </table>
                     </div > : <Loading />
                 }
-
-
             </div>
 
         )
