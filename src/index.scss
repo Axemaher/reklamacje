@@ -229,7 +229,6 @@ $s1000: 1000px;
 		}
 	}
 
-
 	/* MODAL */
 	.modal {
 		position: fixed; 
@@ -544,5 +543,12 @@ $s1000: 1000px;
 		font-size: 10px;
 		width: 200px;
 		bottom: -8px;
+	}
+}
+
+
+@media screen and (max-width: $s640) {
+	.filters {
+		top: 54px;
 	}
 }

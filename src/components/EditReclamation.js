@@ -9,37 +9,26 @@ import { Redirect } from 'react-router-dom'
 class EditReclamation extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            reclamation: "",
-            client: "",
-            id: "",
-            informations: "",
-            history: "",
-            correctData: false,
-            redirect: false
-        }
-    }
 
-    componentWillMount() {
         const { content } = this.props;
         if (content !== undefined && content.length !== 0) {
             const id = this.props.match.params.id;
             const edited = this.props.content.filter(el => el.id === id)[0]
-            this.setState({
+            this.state = {
                 reclamation: edited.reclamation,
                 client: edited.client,
                 id: edited.id,
                 informations: edited.informations,
                 history: edited.history,
                 correctData: true
-            })
-        } else if (content === undefined) {
-            this.setState({ correctData: false })
+            }
+        } else {
+            this.state = { correctData: false }
         }
-
     }
+
     handleSave = () => {
-        let newData = this.state;
+        let newData = { ...this.state };
         delete newData.correctData;
         delete newData.redirect;
         this.props.handleEdit(newData)

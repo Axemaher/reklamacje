@@ -42,7 +42,7 @@ class AddReclamation extends Component {
 
     handleSave = () => {
         const now = new Date();
-        let stateCopy = this.state;
+        let stateCopy = { ...this.state };
         delete stateCopy.redirect;
         let reclamationNumber = null
         if (isNaN(this.props.reclamationCounter)) {
@@ -102,6 +102,9 @@ class AddReclamation extends Component {
                 ...this.state.informations, [e.target.name]: e.target.value
             }
         })
+    }
+    handleChange = e => {
+        console.log(e.taget.name)
     }
     render() {
         return (
