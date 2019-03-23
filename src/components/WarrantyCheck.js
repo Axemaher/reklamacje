@@ -79,7 +79,7 @@ class WarrantyCheck extends React.Component {
                         </label>
 
                         Status:
-                        {this.state.daysToEndWarranty === "" ?
+                        {daysToEndWarranty === "" ?
                             "" :
                             <span>{daysToEndWarranty <= 0 ? ` zakończony` : ` pozostało ${daysToEndWarranty} dni`}</span>}
                         <button className="btn" type="submit" onClick={this.handleSubmit}>sprawdź</button>

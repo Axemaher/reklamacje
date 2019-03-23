@@ -70,8 +70,8 @@ class ColumnsSettings extends Component {
                     <form>
                         <div className="row">
                             {
-                                checkboxData.map((data, index) => (
-                                    <div key={index}>
+                                checkboxData.map(data => (
+                                    <div key={data.name}>
                                         <label htmlFor={data.name} className="control control--checkbox">
                                             {data.label}
                                             <input

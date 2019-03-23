@@ -48,11 +48,11 @@ class LoginForm extends Component {
             })
     }
     render() {
-        // let loginButtonContent
+        const { correctLoginData, wrongLoginData, email, password, savePassword } = this.state;
         let loginButton = null;
-        if (this.state.correctLoginData) {
+        if (correctLoginData) {
             loginButton = <button className="login-btn" type="submit">DANE POPRAWNE <span className="loading"><FontAwesomeIcon icon="spinner" /></span></button>
-        } else if (this.state.wrongLoginData) {
+        } else if (wrongLoginData) {
             loginButton = <button className="login-btn" type="submit">DANE NIEPOPRAWNE <span className="loading"><FontAwesomeIcon icon="spinner" /></span></button>
         } else {
             loginButton = <button className="login-btn" type="submit">ZALOGUJ</button>
@@ -70,7 +70,7 @@ class LoginForm extends Component {
                                 type="email"
                                 placeholder="Email"
                                 name="email"
-                                value={this.state.email}
+                                value={email}
                                 onChange={this.handleLoginChange} />
                         </div>
                         <div className="input-container">
@@ -81,7 +81,7 @@ class LoginForm extends Component {
                                 type="password"
                                 placeholder="Hasło"
                                 name="password"
-                                value={this.state.password}
+                                value={password}
                                 onChange={this.handleLoginChange}
                             />
                         </div>
@@ -92,7 +92,7 @@ class LoginForm extends Component {
                                     type="checkbox"
                                     id="savePassword"
                                     name="savePassword"
-                                    checked={this.state.savePassword}
+                                    checked={savePassword}
                                     onChange={this.handleLoginChange}
                                 />
                                 <div className="control__indicator"></div>

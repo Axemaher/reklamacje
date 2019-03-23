@@ -22,16 +22,18 @@ class App extends Component {
         }
     }
     add = newData => {
-        if (Array.isArray(this.state.content)) {
-            this.setState({ content: [...this.state.content, newData] })
-        } else {
-            this.setState({ content: [newData] })
-        }
-
+        // if (Array.isArray(this.state.content)) {
+        //     this.setState({ content: [...this.state.content, newData] })
+        // } else {
+        //     this.setState({ content: [newData] })
+        // }
+        this.setState({
+            content: [].concat(this.state.content, newData)
+        })
     }
     edit = data => {
         const index = this.state.content.findIndex(el => el.id === data.id)
-        const stateCopy = this.state;
+        const stateCopy = { ...this.state };
         stateCopy.content[index] = data;
         this.setState({
             content: stateCopy.content
@@ -69,10 +71,8 @@ class App extends Component {
     render() {
         return (
             <div>
-                {!this.state.loggedIn &&
-                    <LoginForm loginSuccess={this.loginSuccess} />
-                }
-                {this.state.loggedIn &&
+                {!this.state.loggedIn ? <LoginForm loginSuccess={this.loginSuccess} /> :
+
                     <div className="container container-app">
                         <Router>
                             <>
@@ -107,7 +107,10 @@ class App extends Component {
                                 </Switch>
                             </>
                         </Router>
-                    </div>}
+                    </div>
+                }
+
+
 
             </div>
         );
