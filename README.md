@@ -1,5 +1,5 @@
 # Reclamations
-[live](https://secure-sierra-20780.herokuapp.com/)
+[live](mb2-reclamations.netlify.app)
 user: test@test.pl
 password: test123
 
