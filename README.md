@@ -1,5 +1,5 @@
 # Reclamations
-[live](mb2-reclamations.netlify.app)
+[live](https://mb2-reclamations.netlify.app/)
 user: test@test.pl
 password: test123
 
